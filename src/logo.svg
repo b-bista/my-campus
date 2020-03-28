@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="155.254" height="44.296" viewBox="0 0 155.254 44.296">
+  <g id="Group_3" data-name="Group 3" transform="translate(-229.303 -485.226)">
+    <g id="Group_2" data-name="Group 2">
+      <path id="Path_5" data-name="Path 5" d="M341.5,498.941l20.6-12.545L382.7,498.915l-20.558,13.738Z" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>
+      <path id="Path_6" data-name="Path 6" d="M345.806,507.339s-2.3,12.467,4.8,15.6S370.53,524.5,370.53,524.5" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>
+      <path id="Path_7" data-name="Path 7" d="M364.375,499.525l10.015,6.51v8.659" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>
+      <path id="Path_8" data-name="Path 8" d="M374.495,522.762l2.086,6.259H372.2Z" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+      <circle id="Ellipse_2" data-name="Ellipse 2" cx="3.593" cy="3.593" r="3.593" transform="translate(370.798 514.694)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>
+      <line id="Line_2" data-name="Line 2" y2="7.726" transform="translate(377.983 505.768)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>
+    </g>
+    <text id="MyCampus" transform="translate(229.303 514.16)" fill="#fff" font-size="23" font-family="TitilliumWeb-Regular, Titillium Web"><tspan x="0" y="0">MyCampus</tspan></text>
+  </g>
+</svg>

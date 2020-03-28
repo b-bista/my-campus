@@ -1,0 +1,44 @@
+$primary: #275FA8 !default
+
+//Responsiveness
+//960, 1152, and 1344 are divisible by 12 and 16
+
+$tablet: 769px !default
+//960 container + 40
+$desktop: 1000px !default
+//1152 container + 40
+$widescreen: 1192px !default
+//1344 container + 40
+$fullhd: 1384px !default
+
+=mobile
+    @media screen and (max-width: $tablet - 1px)
+        @content
+
+=tablet
+    @media screen and (min-width: $tablet)
+        @content
+
+=tablet-only
+    @media screen and (min-width: $tablet) and (max-width: $desktop - 1px)
+        @content
+
+=desktop
+    @media screen and (min-width: $desktop)
+        @content
+
+=desktop-only
+    @media screen and (min-width: $desktop) and (max-width: $widescreen - 1px)
+        @content
+
+=widescreen
+    @media screen and (min-width: $widescreen)
+        @content
+
+=widescreen-only
+    @media screen and (min-width: $widescreen) and (max-width: $fullhd - 1px)
+        @content
+
+=fullhd
+    @media screen and (min-width: $fullhd)
+        @content
