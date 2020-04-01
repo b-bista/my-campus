@@ -2,7 +2,7 @@ import React from 'react';
 
 function Orgs() {
   return (
-    <div className="App">
+    <div className="container">
       Orgs
     </div>
   );

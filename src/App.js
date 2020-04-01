@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
+
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
@@ -12,14 +14,20 @@ import Orgs from './components/Orgs/Orgs';
 function App() {
   return (
     <div className="App">
-      <Header/>
-        {/* 
-        <Route exact={true} path="/" component={Home} />
-        <Route path="/Orgs" component={Orgs} />
-         */}
-        
+      <Router>
+        <Header/>
+           
+          <Route path="/" exact component={Home} />
+          <Route path="/Events" component={Events} />
+          <Route path="/Orgs" component={Orgs} />
+          <Route path="/Forum" component={Forum} />
+          <Route path="/Messages" component={Messages} />
 
-      <Footer/>
+          
+
+        <Footer/>
+      </Router>
+      
     </div>
   );
 }
