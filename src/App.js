@@ -24,7 +24,6 @@ function App() {
           <Route path="/Orgs" component={Orgs} />
           <Route path="/Forum" component={Forum} />
           <Route path="/Messages" component={Messages} />
-
           
 
         <Footer/>
