@@ -1,4 +1,5 @@
 import React from 'react';
+import EventTile from './EventTile/EventTile'
 import './Events.css';
 
 function Events() {
@@ -41,13 +42,23 @@ function Events() {
                     </div>
                   </div>
 
+                  <label className="label" style={{fontSize: "12px"}}>Club Name</label>
+                  <input type="text" placeholder="Search..." name="search"></input>
+
                 </div>
               </div>
             </div>
             <div className="column is-three-fifths">
               <div className="card">
                 <div className="card-content">
-                  
+                  <h1 style={{fontSize: "2vw"}}>Search Current On-Campus Events</h1>
+                  <div className="container">
+                    <EventTile/>
+                    <EventTile/>
+                    <EventTile/>
+                    <EventTile/>
+                    <EventTile/>
+                  </div>
                 </div>
               </div>
             </div>

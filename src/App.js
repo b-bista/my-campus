@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+//import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import './App.css';
 
 import Login from './components/Login/Login';
@@ -10,26 +11,28 @@ import Forum from './components/Forum/Forum';
 import Events from './components/Events/Events';
 import Messages from './components/Messages/Messages';
 import Orgs from './components/Orgs/Orgs';
-//import { Route } from 'react-router-dom';
+;
+
 
 function App() {
   return (
+    <Router>
     <div className="App">
       <Router>
         <Header/>
-           
-          <Route path="/" exact component={Home} />
-          <Route path="/Login" component={Login} />
+          <Switch>
+          <Route exact path="/" component={Login} /> 
+          <Route path="/Home" component={Home} />
           <Route path="/Events" component={Events} />
           <Route path="/Orgs" component={Orgs} />
           <Route path="/Forum" component={Forum} />
           <Route path="/Messages" component={Messages} />
-          
-
+          </Switch>
         <Footer/>
       </Router>
       
     </div>
+    </Router>
   );
 }
 
