@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import './Login.css';
-//import FontAwesome from 'react-fontawesome';
-//import faStyles from 'font-awesome/css/font-awesome.css';
 
 export default class Login extends Component {
     constructor(props) {
@@ -33,7 +31,6 @@ export default class Login extends Component {
             <form class="user" onSubmit={this.handleSubmit}>
               <a id="pic"><img src="https://i.imgur.com/Aug55CS.png" class="logo"></img></a>
               <p class="space">
-              <label class="label">Username</label>
               <input
                 name="username"
                 placeholder="Username"
