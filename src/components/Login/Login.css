@@ -1,16 +1,20 @@
 .form{
-  text-align: center;
-  padding-bottom: 50px;
-}
-.logo{
-  padding-bottom: 30px;
-}
-.user {
-  margin: auto;
-  width: 30%;
-  padding: 10px 50px 30px 50px;
-  background-color: #275FA8;
-}
-p{
-  padding-bottom: 10px;
-}
+    text-align: center;
+    padding-top: 50px;
+  }
+  .logo{
+    padding-bottom: 30px;
+    text-align: center;
+  }
+  .user {
+    margin: auto;
+    width: 30%;
+    padding: 10px 50px 30px 50px;
+    background-color: #275FA8;
+  }
+  .space{
+    padding-bottom: 10px;
+  }
+  .label{
+    text-align: center;
+  }
