@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from '../Post/Post.js';
+import Post from './Post/Post.js';
 import './Home.css';
 
 function Home() {

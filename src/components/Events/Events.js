@@ -42,6 +42,8 @@ function Events() {
                     </div>
                   </div>
 
+                  <hr></hr>
+
                   <label className="label" style={{fontSize: "12px"}}>Club Name</label>
                   <input type="text" placeholder="Search..." name="search"></input>
 
@@ -49,7 +51,7 @@ function Events() {
               </div>
             </div>
             <div className="column is-three-fifths">
-              <div className="card">
+              <div className="card is-paddingless">
                 <div className="card-content">
                   <h1 style={{fontSize: "2vw"}}>Search Current On-Campus Events</h1>
                   <div className="container">
