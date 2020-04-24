@@ -13,7 +13,7 @@ router.route('/add').post((req, res) => {
   const content = req.body.content;
   const date = Date.parse(req.body.date);
 
-  const newPost = new User({
+  const newPost = new Post({
       username,
       title,
       content,
