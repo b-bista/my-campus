@@ -12,7 +12,14 @@ function Events() {
             <div className="column is-one-fifth">
               <div className="card">
                 <div className="card-content">
-                  <label className="label" style={{fontSize: "14px"}}>Filter by</label>
+                  <label className="label" style={{_fontSize: "14px",
+get fontSize() {
+                      return this._fontSize;
+                    },
+set fontSize(value) {
+                      this._fontSize = value;
+                    },
+}}>Filter by</label>
                   <hr></hr>
                   <label className="label" style={{fontSize: "12px"}}>Date</label>
                   <div className="container">

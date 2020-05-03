@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-no-comment-textnodes */
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react';
 import Comment from './Comment/Comment';
 import './Post.css';
@@ -17,6 +20,7 @@ function Post() {
             </div>
 
             <div class="media-content">
+              // eslint-disable-next-line jsx-a11y/anchor-is-valid
               <a class="user-name is-paddingless">User Name</a>
               <p class="date-time-posted is-paddingless"><small>Posted (date-time-posted) ago</small></p>
             </div>

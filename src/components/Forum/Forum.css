@@ -1,0 +1,31 @@
+.forum-body {
+    text-align: center;
+    margin: 1% 10%; 
+}
+
+.forum-editor {
+    margin: 1% 10%; 
+}
+
+.forum-editor-button {
+    float: right; 
+    margin-top: 1%; 
+}
+
+
+/* .forum-back {
+    margin: 2%; 
+} */
+
+@media(max-width: 90px) {
+    .forum-editor
+    {
+        margin: 1em; 
+    }
+
+    .forum-body
+    {
+        margin: 1em; 
+    }
+}
+

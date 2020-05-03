@@ -4,13 +4,15 @@ import './App.css';
 
 import Login from './components/Login/Login';
 import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+// import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Forum from './components/Forum/Forum';
 import Events from './components/Events/Events';
 import Messages from './components/Messages/Messages';
 import Orgs from './components/Orgs/Orgs';
-;
+
+
+
 
 
 function App() {
@@ -27,7 +29,7 @@ function App() {
           <Route path="/Forum" component={Forum} />
           <Route path="/Messages" component={Messages} />
           </Switch>
-        <Footer/>
+        {/* <Footer/> */}
       </Router>
       
     </div>
