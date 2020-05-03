@@ -8,11 +8,15 @@ import Header from './components/Header/Header';
 import Home from './components/Home/Home';
 import Forum from './components/Forum/Forum';
 import Events from './components/Events/Events';
+import EventPage from './components/EventPage/EventPage';
 import Messages from './components/Messages/Messages';
 import Orgs from './components/Orgs/Orgs';
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> c8f16ae6ef3a4fe5da94b4b2dbb45ecbe2d7d70e
 
 
 function App() {
@@ -25,6 +29,7 @@ function App() {
           <Route exact path="/" component={Login} /> 
           <Route path="/Home" component={Home} />
           <Route path="/Events" component={Events} />
+          <Route path="/EventPage" component={EventPage} />
           <Route path="/Orgs" component={Orgs} />
           <Route path="/Forum" component={Forum} />
           <Route path="/Messages" component={Messages} />

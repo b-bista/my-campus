@@ -6,7 +6,11 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+<<<<<<< HEAD
     "bootstrap": "^4.4.1",
+=======
+    "axios": "^0.19.2",
+>>>>>>> c8f16ae6ef3a4fe5da94b4b2dbb45ecbe2d7d70e
     "bulma": "^0.8.1",
     "jquery": "^3.5.0",
     "react": "^16.13.1",
