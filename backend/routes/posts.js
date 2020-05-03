@@ -17,7 +17,7 @@ router.route('/add').post((req, res) => {
       username,
       title,
       content,
-      date,
+      date
     });
 
   newPost.save()

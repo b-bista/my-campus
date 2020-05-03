@@ -8,9 +8,10 @@ import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Forum from './components/Forum/Forum';
 import Events from './components/Events/Events';
+import EventPage from './components/EventPage/EventPage';
 import Messages from './components/Messages/Messages';
 import Orgs from './components/Orgs/Orgs';
-;
+
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/" component={Login} /> 
           <Route path="/Home" component={Home} />
           <Route path="/Events" component={Events} />
+          <Route path="/EventPage" component={EventPage} />
           <Route path="/Orgs" component={Orgs} />
           <Route path="/Forum" component={Forum} />
           <Route path="/Messages" component={Messages} />
