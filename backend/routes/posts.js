@@ -15,6 +15,7 @@ router.route('/add').post((req, res) => {
 
   const newPost = new Post({
       postname,
+      username,
       content,
       date
     });
@@ -43,8 +44,8 @@ router.route('/update/:id').post((req, res) => {
   Post.findById(req.params.id)
     .then(post => {
       post.postname = req.body.postname;
-      post.description = req.body.description;
-      post.duration = Number(req.body.duration);
+      post.username = req.body.username;
+      post.content = Number(req.body.content);
       post.date = Date.parse(req.body.date);
 
       post.save()
