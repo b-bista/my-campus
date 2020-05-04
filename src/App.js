@@ -12,13 +12,6 @@ import EventPage from './components/EventPage/EventPage';
 import Messages from './components/Messages/Messages';
 import Orgs from './components/Orgs/Orgs';
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> c8f16ae6ef3a4fe5da94b4b2dbb45ecbe2d7d70e
-
-
 function App() {
   return (
     <Router>
