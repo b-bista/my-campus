@@ -67,7 +67,7 @@ function OrgPage() {
               <div className="card">
                 <div className="card-content">
                     <figure className="image is-3by1">
-                      <img src="https://bulma.io/images/placeholders/128x128.png"></img>
+                      <img src="https://bulma.io/images/placeholders/1280x960.png"></img>
                     </figure>
                 </div>
                 </div>
