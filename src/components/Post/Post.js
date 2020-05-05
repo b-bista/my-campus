@@ -1,47 +1,66 @@
 import React from 'react';
+import Text from './Text.js'
 import './Post.css';
 
-const Post = (props) => (  
-  <div className="Post">
-  <section className="section">
-      <div className="card is-paddingless">
-        <div className="card-content">
-          <div className="container">
+class Post extends React.Component
+{
+  constructor(props) {
+    super(props)
 
+    this.addText = this.addText.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
 
-{/* Card should be part of Post component -> another folder */}
-            <div className="card">  
-              <div className="card-content">
-                <div className="content">
-                  Post: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                </div>
-              </div>
-           </div>
+    this.state = {
+        texts: [],
+        newTextBody: '',
+      }
+  }
 
-           <div className="card">  
-              <div className="card-content">
-                <div className="content">
-                  Post: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                </div>
-              </div>
-           </div>
+  addText() {
+    const newState = Object.assign({}, this.state); 
+    newState.texts.push(this.state.newTextBody); 
+    newState.newTextBody = ''; 
+    this.setState(newState); 
+  }
 
-                <div className="card-content">
-            <textarea className="textarea is-hovered" placeholder="Enter Text Here...."></textarea>
-            <button className="button is-link is-hovered post_btn">Post</button>
-            <div className="clear"></div>
+  handleTextChange(ev){
+    this.setState({
+      newTextBody: ev.target.value 
+    })
+  }
+
+  render() 
+  {
+    return (
+  
+    <div className="Post">
+    <section className="section">
+        <div className="card is-paddingless">
+          <div className="card-content">
+            <h1 className="subtitle is-4">Thread Topic</h1>
+            <div className="container">
+            {
+              this.state.texts.map((textBody, idx) => {
+                return (
+                  <Text key={idx} textBody = {textBody}/>
+                )
+              })
+            }  
+            <textarea className="textarea is-hovered"value={this.state.newTextBody} onChange={this.handleTextChange}/>
+              <button className="button is-link is-hovered post_btn" onClick= {this.addText}>Post</button>
+              <div className="clear"></div>
+            
+            </div>
           </div>
-          </div>
-        </div>
-    </div>
-</section>
-</div> 
+      </div>
+  </section>
+  </div> 
+  
+    );
+    }
+}
 
-  );
 
 
 export default Post;
+

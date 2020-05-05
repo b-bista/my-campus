@@ -6,4 +6,7 @@
 .card{
     margin: 1%; 
 }
+.clear{
+    clear: both; 
+}
 
