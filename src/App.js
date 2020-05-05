@@ -7,10 +7,13 @@ import Header from './components/Header/Header';
 // import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Forum from './components/Forum/Forum';
+import Post from './components/Post/Post';
 import Events from './components/Events/Events';
 import EventPage from './components/EventPage/EventPage';
 import Messages from './components/Messages/Messages';
 import Orgs from './components/Orgs/Orgs';
+
+
 
 function App() {
   return (
@@ -26,6 +29,7 @@ function App() {
           <Route path="/Orgs" component={Orgs} />
           <Route path="/Forum" component={Forum} />
           <Route path="/Messages" component={Messages} />
+          <Route path="/Post" component={Post}/>
           </Switch>
         {/* <Footer/> */}
       </Router>
