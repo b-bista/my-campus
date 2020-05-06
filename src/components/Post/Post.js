@@ -46,7 +46,7 @@ class Post extends React.Component
                 )
               })
             }  
-            <textarea className="textarea is-hovered"value={this.state.newTextBody} onChange={this.handleTextChange}/>
+            <textarea className="textarea is-hovered" value={this.state.newTextBody} onChange={this.handleTextChange}/>
               <button className="button is-link is-hovered post_btn" onClick= {this.addText}>Post</button>
               <div className="clear"></div>
             

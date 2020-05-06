@@ -1,9 +1,12 @@
 import React from 'react';
 import './EventTile.css';
+import { Link } from 'react-router-dom';
+
 
 function EventTile() {
   return (  
     <div className="EventTile">
+      <Link to = "/EventPage">
       <div className="card">
         <div className="media" style={{padding: "20px"}}>
           <div className="media-content">
@@ -25,6 +28,7 @@ function EventTile() {
           </div>
         </div>
       </div>
+      </Link>
     </div>
   );
 }

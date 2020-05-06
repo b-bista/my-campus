@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 
 const Card = (props) => (  
     <div className="postcard">
+       <Link to = "/Post">
       <div className="card">
         {/* Should load from the back end based on posts*/}
-          <Link to = "/Post">
+         
             <p className="card-header-title">Thread Topic</p>
-          </Link>
+         
         <div className="card-content">
           <div className="content">
             Description by thread admin 
@@ -20,6 +21,7 @@ const Card = (props) => (
           </div>
         </div>
       </div>
+      </Link>
   </div>
     );
 export default Card;

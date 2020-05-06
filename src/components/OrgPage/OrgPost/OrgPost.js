@@ -1,5 +1,5 @@
 import React from 'react';
-import './OrgPost.css';
+// import './OrgPost.css';
 import OrgComments from './OrgComments/OrgComments';
 import { Link } from 'react-router-dom';
 

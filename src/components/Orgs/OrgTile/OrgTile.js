@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import './OrgTile.css';
+// import { Link } from 'react-router-dom';
 
 function OrgTile() {
   return (  
     <div className="OrgTile">
+      {/* <Link to = "/OrgPage"> */}
     <div className="card">
         <div className="media" style={{padding: "20px"}}>
             <div className="media-left">
@@ -18,6 +20,7 @@ function OrgTile() {
             </div> 
         </div>
       </div>
+      {/* </Link> */}
     </div>
   );
 }
