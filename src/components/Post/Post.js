@@ -1,6 +1,10 @@
 import React from 'react';
 import Text from './Text.js'
 import './Post.css';
+import { Link } from 'react-router-dom';
+
+// Page with all the posts populated + button to create post page. Connected to Forum page
+
 
 class Post extends React.Component
 {
@@ -37,24 +41,35 @@ class Post extends React.Component
     <section className="section">
         <div className="card is-paddingless">
           <div className="card-content">
-            <h1 className="subtitle is-4">Thread Topic</h1>
-            <div className="container">
-            {
+
+    <div class="field is-grouped">
+            <p class="control is-expanded">
+            <h1 className="subtitle is-4">MyCamous Forums - (Thread Title)</h1>
+            </p>
+            <p class="control">
+            <Link to = "/Create">
+            <button class="button is-link is-hovered">Create Post</button>
+              </Link>
+            </p>
+          </div>
+
+            <hr></hr>
+            {/* {
               this.state.texts.map((textBody, idx) => {
                 return (
                   <Text key={idx} textBody = {textBody}/>
                 )
               })
-            }  
-            <textarea className="textarea is-hovered" value={this.state.newTextBody} onChange={this.handleTextChange}/>
-              <button className="button is-link is-hovered post_btn" onClick= {this.addText}>Post</button>
-              <div className="clear"></div>
-            
+            }   */}
+
+      <Text></Text>
+      <Text></Text>
+
+
             </div>
-          </div>
-      </div>
-  </section>
-  </div> 
+            </div>
+            </section>
+    </div> 
   
     );
     }
