@@ -11,7 +11,8 @@ class Post extends React.Component {
     this.state = {
       body: this.props.body,
       photo: this.props.photo,
-      postedBy: this.props.postedBy
+      postedBy: this.props.postedBy,
+      date: this.props.date
     };
   }
   
@@ -43,17 +44,17 @@ class Post extends React.Component {
   
               <div class="media-content">
                 <a class="user-name is-paddingless">{this.state.postedBy}</a>
-                <p class="date-time-posted is-paddingless"><small>Posted (date-time-posted) ago</small></p>
+                <p class="date-time-posted is-paddingless"><small>Posted at {this.state.date}</small></p>
               </div>
             </div>
   
-            <p class="post-content">Still court no small think death so an wrote. Incommode necessary no it behavior convinced distrusts an unfeeling he. Could death since do we hoped is in. Exquisite no my attention extensive. The determine conveying moonlight age. Avoid for see marry sorry child. Sitting so totally forbade hundred to. </p>
+            <p class="post-content">{this.state.body}</p>
   
             
   
             <div className="post-image card-image">
               <figure className="image is-4by3">
-                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image"></img>
+                <img src={this.state.photo} alt="Placeholder image"></img>
               </figure>
             </div>
   
