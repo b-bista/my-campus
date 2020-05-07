@@ -8,16 +8,16 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-  const postname = req.body.postname;
-  const username = req.body.username;
-  const content = req.body.content;
-  const date = Date.parse(req.body.date);
+  const body = req.body.body;
+  const photo = req.body.photo;
+  const postedBy = req.body.postedBy;
+  //const photo = req.body.content;
 
   const newPost = new Post({
-      postname,
-      username,
-      content,
-      date
+      body,
+      photo,
+      postedBy
+      /*likes,*/
     });
 
   newPost.save()
@@ -43,10 +43,9 @@ router.route('/:id').delete((req, res) => {
 router.route('/update/:id').post((req, res) => {
   Post.findById(req.params.id)
     .then(post => {
-      post.postname = req.body.postname;
-      post.username = req.body.username;
-      post.content = Number(req.body.content);
-      post.date = Date.parse(req.body.date);
+      post.body = req.body.body;
+      post.photo = req.body.photo;
+      post.postedBy = req.body.postedBy;
 
       post.save()
         .then(() => res.json('Post updated!'))
