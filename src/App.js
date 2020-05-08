@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 
 import Login from './components/Login/Login';
@@ -7,10 +7,14 @@ import Header from './components/Header/Header';
 // import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Forum from './components/Forum/Forum';
+import Post from './components/Post/Post';
+import Create from './components/Post/Create'
 import Events from './components/Events/Events';
 import EventPage from './components/EventPage/EventPage';
 import Messages from './components/Messages/Messages';
 import Orgs from './components/Orgs/Orgs';
+
+
 
 function App() {
   return (
@@ -24,8 +28,12 @@ function App() {
           <Route path="/Events" component={Events} />
           <Route path="/EventPage" component={EventPage} />
           <Route path="/Orgs" component={Orgs} />
+          {/* <React path="/OrgPage" component={OrgPage}/>  */}
           <Route path="/Forum" component={Forum} />
           <Route path="/Messages" component={Messages} />
+          <Route path="/Post" component={Post}/>
+          <Route path="/Create" component={Create}/>
+          
           </Switch>
         {/* <Footer/> */}
       </Router>
