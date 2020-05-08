@@ -29,7 +29,8 @@ class Home extends React.Component {
       body={currentpost.body} 
       date={currentpost.createdAt} 
       photo={currentpost.photo} 
-      postedBy={currentpost.postedBy}/>;
+      postedBy={currentpost.postedBy}
+      comments={currentpost.comments}/>;
     })
   }
 

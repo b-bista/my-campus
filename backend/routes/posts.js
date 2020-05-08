@@ -128,7 +128,7 @@ router.post('/:userId/:commentId/like', async (req, res) => {
   .then(() => res.json('Liked!'))
   .catch(err => res.status(400).json('Error: ' + err));
 
-  // Associate Post with comment
+  // Associate like with comment
   comment.likes.push(like._id);
   like.save()
   .then(() => res.json('Likes updated!'))

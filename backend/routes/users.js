@@ -10,24 +10,16 @@ router.route('/').get((req, res) => {
 
 //Create
 router.route('/add').post((req, res) => {
-  const userID = req.body.userID;
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
-  const dateRegistered = Date.parse(req.body.dateRegistered)
   const userType = req.body.userType;
-  const accountStatus = req.body.accountStatus;
-  const lastAccessed = req.body.lastAccessed;
 
   const newUser = new User({
-      userID,  
       username,
       email,
       password,
-      dateRegistered,
-      userType,
-      accountStatus,
-      lastAccessed
+      userType
     });
 
   newUser.save()
@@ -53,14 +45,10 @@ router.route('/:id').delete((req, res) => {
 router.route('/update/:id').post((req, res) => {
   User.findById(req.params.id)
     .then(user => {
-      userID = req.body.userID;
       username = req.body.username;
       email = req.body.email;
       password = req.body.password;
-      dateRegistered = Date.parse(req.body.dateRegistered)
       userType = req.body.userType;
-      accountStatus = req.body.accountStatus;
-      lastAccessed = req.body.lastAccessed;
 
       user.save()
         .then(() => res.json('User updated!'))

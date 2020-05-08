@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import Comment from './Comment/Comment';
 import './Post.css';
 import { Link } from 'react-router-dom';
@@ -12,8 +11,18 @@ class Post extends React.Component {
       body: this.props.body,
       photo: this.props.photo,
       postedBy: this.props.postedBy,
-      date: this.props.date
-    };
+      date: this.props.date,
+      comments: this.props.comments};
+    }
+    commentList() {
+      return this.state.comment.map(currentcomment => {
+        return <Post 
+        body={currentcomment.body} 
+        date={currentcomment.createdAt} 
+        photo={currentcomment.photo} 
+        postedBy={currentcomment.postedBy}
+        comments={currentcomment.comments}/>;
+      })
   }
   
   /*componentDidMount() {
@@ -64,9 +73,6 @@ class Post extends React.Component {
               <Link to="" className="card-footer-item">Like<i class="fas fa-heart"></i></Link>
               <Link to="" className="card-footer-item">Comment<i class="fas fa-comment-alt"></i></Link>
             </footer>
-  
-            
-            <Comment></Comment>
           </div>
         </div>
       </div>
