@@ -29,6 +29,30 @@ router.post('/:userId/post', async (req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//Like a post
+router.post('/:userId/:postId/like', async (req, res) => {
+  //Find user
+  const user = await User.findOne({ _id: req.params.userId });
+  const post = await Post.findOne({ _id: req.params.postId });
+
+  //Like post
+  const like = new Like();
+  like.likedBy = user._id;
+  like.post = post._id;
+  like.save()
+  .then(() => res.json('Comment added!'))
+  .catch(err => res.status(400).json('Error: ' + err));
+
+  // Associate Post with comment
+  post.likes.push(like._id);
+  post.save()
+  .then(() => res.json('Likes updated!'))
+  .catch(err => res.status(400).json('Error: ' + err));
+
+  res.send(like);
+});
+
+
 //Read by id
 router.get('/:postId', async (req, res) => {
   await Post.findById(req.params.id)
@@ -61,7 +85,7 @@ router.put('/:postId', async (req, res) => {
 // Create a Comment
 router.post("/:postId/comment", async (req, res) => {
   
-  //Find posst
+  //Find post
   const post = await Post.findOne({ _id: req.params.postId });
 
   //Create a Comment
@@ -88,6 +112,29 @@ router.get("/:postId/comment", async (req, res) => {
     "comments"
   );
   res.send(post);
+});
+
+//Like a comment
+router.post('/:userId/:commentId/like', async (req, res) => {
+  //Find user and comment
+  const user = await User.findOne({ _id: req.params.userId });
+  const comment = await Comment.findOne({ _id: req.params.commentId });
+
+  //Like post
+  const like = new Like();
+  like.likedBy = user._id;
+  like.comment = comment._id;
+  like.save()
+  .then(() => res.json('Liked!'))
+  .catch(err => res.status(400).json('Error: ' + err));
+
+  // Associate Post with comment
+  comment.likes.push(like._id);
+  like.save()
+  .then(() => res.json('Likes updated!'))
+  .catch(err => res.status(400).json('Error: ' + err));
+
+  res.send(like);
 });
 
 module.exports = router;
