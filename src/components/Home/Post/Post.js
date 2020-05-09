@@ -76,6 +76,8 @@ class Post extends React.Component {
               <Link to="" className="card-footer-item">Like<i class="fas fa-heart"></i></Link>
               <Link to="" className="card-footer-item">Comment<i class="fas fa-comment-alt"></i></Link>
             </footer>
+
+            { this.commentList() }
           </div>
         </div>
       </div>
