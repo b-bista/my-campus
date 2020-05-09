@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Comment from './Comment/Comment';
 import './Post.css';
 import { Link } from 'react-router-dom';
@@ -6,37 +7,39 @@ import { Link } from 'react-router-dom';
 class Post extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
+      id: this.props.id,
       body: this.props.body,
       photo: this.props.photo,
       postedBy: this.props.postedBy,
       date: this.props.date,
-      comments: this.props.comments};
+      comments: []};
     }
+   
+    //'http://localhost:6000/posts/'+this.state.id.toString()+'comments'
+    componentDidMount() {
+      axios.get('http://localhost:6000/posts/5eb4dd08d349ad2480efe56b/comments')
+        .then(response => {
+          this.setState({ comments: response.data.comments})
+          console.log(this.state.comments);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+
     commentList() {
-      return this.state.comment.map(currentcomment => {
-        return <Post 
-        body={currentcomment.body} 
-        date={currentcomment.createdAt} 
-        photo={currentcomment.photo} 
+      return this.state.comments.map(currentcomment => {
+        return <Comment 
+        body={currentcomment.body}  
         postedBy={currentcomment.postedBy}
-        comments={currentcomment.comments}/>;
-      })
+        date={currentcomment.createdAt}
+        //userIcon={}
+        //likeCount={}
+        />
+      });
   }
-  
-  /*componentDidMount() {
-    axios.get('http://localhost:6000/posts/')
-      .then(response => {
-        this.setState({ body: this.props.body,
-          photo: this.props.photo,
-          body: this.props.postedby
-         })
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }*/
 
   render(){
     return (

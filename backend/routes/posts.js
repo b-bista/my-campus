@@ -52,10 +52,9 @@ router.post('/:userId/:postId/like', async (req, res) => {
   res.send(like);
 });
 
-
 //Read by id
 router.get('/:postId', async (req, res) => {
-  await Post.findById(req.params.id)
+  await Post.findById(req.params.postId)
     .then(post => res.json(post))
     .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -83,32 +82,52 @@ router.put('/:postId', async (req, res) => {
 });
 
 // Create a Comment
-router.post("/:postId/comment", async (req, res) => {
+router.post("/:userId/:postId/makeComment", async (req, res) => {
   
-  //Find post
-  const post = await Post.findOne({ _id: req.params.postId });
+  //Find post and user
+  const user = await User.findOne({ _id: req.params.userId });
+  const parentPost = await Post.findOne({ _id: req.params.postId });
 
   //Create a Comment
   const comment = new Comment();
   comment.body = req.body.body;
-  comment.postedBy = post._id;
-  comment.save()
-  .then(() => res.json('Comment added!'))
-  .catch(err => res.status(400).json('Error: ' + err));
+  comment.post = parentPost._id;
+  comment.postedBy = user._id;
+  await comment.save();
 
   // Associate Post with comment
-  post.comments.push(comment._id);
-  post.save()
-  .then(() => res.json('Post updated!'))
-  .catch(err => res.status(400).json('Error: ' + err));
+  Post.comments.push(comment._id);
+  await Post.save();
 
   res.send(comment);
 });
 
-//Read a Comment
+//Remove comment
+router.delete(":postId/:commentId", async (req, res) => {
+  
+  //Find post and user
+  const parentPost = await Post.findOne({ _id: req.params.postId });
 
-router.get("/:postId/comment", async (req, res) => {
-  const post = Post.findOne({ _id: req.params.postId }).populate(
+  // Associate Post with comment
+  parentPost.comments.pop(comment._id);
+  await parentPost.save();
+
+  await Post.findByIdAndDelete(req.params.id)
+  .then(() => res.json('Post deleted.'))
+  .catch(err => res.status(400).json('Error: ' + err));
+  await comment.save();
+
+  // Associate Post with comment
+  parentPost.comments.pull(comment._id);
+  await parentPost.save();
+
+  res.send(comment);
+});
+
+//Read comments
+
+router.get("/:postId/comments", async (req, res) => {
+  const post = await Post.findOne({ _id: req.params.postId }).populate(
     "comments"
   );
   res.send(post);

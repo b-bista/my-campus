@@ -1,19 +1,17 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 class Comment extends React.Component{
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       body: this.props.body,
       postedBy: this.props.postedBy,
-      date: this.props.date,
+      date: this.props.date
     };
   }
-
+  
   render(){
     return (  
       <div className="Comment">
@@ -26,11 +24,14 @@ class Comment extends React.Component{
               <div class="media-content">
                 <div class="content">
                   <p>
-                    <strong>Barbara Middleton</strong>
+                    <strong>{this.state.postedBy}</strong>
                     <br></br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
+                    {this.state.body}
                     <br></br>
-                    <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
+                      <small>
+                        <Link to="">Like</Link> 
+                        {this.state.date}
+                      </small>
                   </p>
                 </div>
               </div>

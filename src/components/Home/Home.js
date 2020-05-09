@@ -25,7 +25,8 @@ class Home extends React.Component {
 
   postList() {
     return this.state.posts.map(currentpost => {
-      return <Post 
+      return <Post
+      id={currentpost._id}
       body={currentpost.body} 
       date={currentpost.createdAt} 
       photo={currentpost.photo} 
