@@ -2,8 +2,9 @@ const router = require('express').Router();
 let Post = require('../models/post.model');
 let Comment = require('../models/comment.model');
 let User = require('../models/user.model');
+const requireLogin = require('../middleware/requireLogin')
 
-router.get('/', async (req, res) => {
+router.get('/', requireLogin, async (req, res) => {
   await Post.find()
     .then(posts => res.json(posts))
     .catch(err => res.status(400).json('Error: ' + err));
@@ -82,7 +83,7 @@ router.put('/:postId', async (req, res) => {
 });
 
 // Create a Comment
-router.post("/:userId/:postId/makeComment", async (req, res) => {
+router.post("/:postId/makeComment", async (req, res) => {
   
   //Find post and user
   const user = await User.findOne({ _id: req.params.userId });
