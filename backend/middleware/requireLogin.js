@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../config/keys')
 const mongoose = require('mongoose')
-const User = mongoose.model("User")
+let User = require('../models/user.model')
 module.exports = (req,res,next)=>{
     const {authorization} = req.headers
     if(!authorization){

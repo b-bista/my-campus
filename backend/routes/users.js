@@ -1,60 +1,26 @@
 const router = require('express').Router();
-let User = require('../models/user.model');
+let UserProfile = require('../models/userProfile.model');
+const requireLogin = require('../middleware/requireLogin')
 
-//Read
-router.route('/').get((req, res) => {
-  User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-//Create
-router.route('/add').post((req, res) => {
-  const username = req.body.username;
-  const email = req.body.email;
-  const password = req.body.password;
-  const userType = req.body.userType;
-
-  const newUser = new User({
-      username,
-      email,
-      password,
-      userType
-    });
-
-  newUser.save()
-    .then(() => res.json('User added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-//Read by id
-router.route('/:id').get((req, res) => {
-  User.findById(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-//Delete by id
-router.route('/:id').delete((req, res) => {
-  User.findByIdAndDelete(req.params.id)
-    .then(() => res.json('User deleted.'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-//Update by id
-router.route('/update/:id').post((req, res) => {
-  User.findById(req.params.id)
-    .then(user => {
-      username = req.body.username;
-      email = req.body.email;
-      password = req.body.password;
-      userType = req.body.userType;
-
-      user.save()
-        .then(() => res.json('User updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+//Create user profile
+router.post('/createuserprofile',requireLogin,(req,res)=>{
+  const {firstName, lastName, gender, pic} = req.body 
+  if(!firstName || !lastName){
+    return  res.status(422).json({error:"Plase add all the fields"})
+  }
+  const userProfile = new UserProfile({
+    userId: req.user._id,
+    firstName,
+    lastName,
+    gender,
+    photo:pic
+  })
+  userProfile.save().then(result=>{
+      res.json({userProfile:result})
+  })
+  .catch(err=>{
+      console.log(err)
+  })
+})
 
 module.exports = router;

@@ -1,160 +1,108 @@
 const router = require('express').Router();
 let Post = require('../models/post.model');
-let Comment = require('../models/comment.model');
-let User = require('../models/user.model');
 const requireLogin = require('../middleware/requireLogin')
 
-router.get('/', requireLogin, async (req, res) => {
+router.get('/allposts', requireLogin, async (req, res) => {
   await Post.find()
     .then(posts => res.json(posts))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
 //Create post
-router.post('/:userId/post', async (req, res) => {
-  //Find user
-  const user = await User.findOne({ _id: req.params.userId });
-
-  const body = req.body.body;
-  const photo = req.body.photo;
-  const postedBy = user._id;
-
-  const newPost = new Post({
+router.post('/createpost',requireLogin,(req,res)=>{
+  const {body,pic} = req.body 
+  if(!body){
+    return  res.status(422).json({error:"Plase add all the fields"})
+  }
+  const post = new Post({
       body,
-      photo,
-      postedBy
-    });
+      photo:pic,
+      postedBy:req.user
+  })
+  post.save().then(result=>{
+      res.json({post:result})
+  })
+  .catch(err=>{
+      console.log(err)
+  })
+})
 
-  newPost.save()
-    .then(() => res.json('Post added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+router.get('/mypost',requireLogin,(req,res)=>{
+  Post.find({postedBy:req.user._id})
+  .populate("PostedBy","_id name")
+  .then(mypost=>{
+      res.json({mypost})
+  })
+  .catch(err=>{
+      console.log(err)
+  })
+})
 
-//Like a post
-router.post('/:userId/:postId/like', async (req, res) => {
-  //Find user
-  const user = await User.findOne({ _id: req.params.userId });
-  const post = await Post.findOne({ _id: req.params.postId });
+router.put('/like',requireLogin,(req,res)=>{
+  Post.findByIdAndUpdate(req.body.postId,{
+      $push:{likes:req.user._id}
+  },{
+      new:true
+  }).exec((err,result)=>{
+      if(err){
+          return res.status(422).json({error:err})
+      }else{
+          res.json(result)
+      }
+  })
+})
+router.put('/unlike',requireLogin,(req,res)=>{
+  Post.findByIdAndUpdate(req.body.postId,{
+      $pull:{likes:req.user._id}
+  },{
+      new:true
+  }).exec((err,result)=>{
+      if(err){
+          return res.status(422).json({error:err})
+      }else{
+          res.json(result)
+      }
+  })
+})
 
-  //Like post
-  const like = new Like();
-  like.likedBy = user._id;
-  like.post = post._id;
-  like.save()
-  .then(() => res.json('Comment added!'))
-  .catch(err => res.status(400).json('Error: ' + err));
 
-  // Associate Post with comment
-  post.likes.push(like._id);
-  post.save()
-  .then(() => res.json('Likes updated!'))
-  .catch(err => res.status(400).json('Error: ' + err));
+router.put('/comment',requireLogin,(req,res)=>{
+  const comment = {
+      body:req.body.body,
+      postedBy:req.user._id
+  }
+  Post.findByIdAndUpdate(req.body.postId,{
+      $push:{comments:comment}
+  },{
+      new:true
+  })
+  .populate("comments.postedBy","_id name")
+  .populate("postedBy","_id name")
+  .exec((err,result)=>{
+      if(err){
+          return res.status(422).json({error:err})
+      }else{
+          res.json(result)
+      }
+  })
+})
 
-  res.send(like);
-});
-
-//Read by id
-router.get('/:postId', async (req, res) => {
-  await Post.findById(req.params.postId)
-    .then(post => res.json(post))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-//Delete by id
-router.delete('/:postId', async (req, res) => {
-  await Post.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Post deleted.'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-//Update by id
-router.put('/:postId', async (req, res) => {
-  await Post.findById(req.params.id)
-    .then(post => {
-      post.body = req.body.body;
-      post.photo = req.body.photo;
-      post.postedBy = req.body.postedBy;
-
-      post.save()
-        .then(() => res.json('Post updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-// Create a Comment
-router.post("/:postId/makeComment", async (req, res) => {
-  
-  //Find post and user
-  const user = await User.findOne({ _id: req.params.userId });
-  const parentPost = await Post.findOne({ _id: req.params.postId });
-
-  //Create a Comment
-  const comment = new Comment();
-  comment.body = req.body.body;
-  comment.post = parentPost._id;
-  comment.postedBy = user._id;
-  await comment.save();
-
-  // Associate Post with comment
-  Post.comments.push(comment._id);
-  await Post.save();
-
-  res.send(comment);
-});
-
-//Remove comment
-router.delete(":postId/:commentId", async (req, res) => {
-  
-  //Find post and user
-  const parentPost = await Post.findOne({ _id: req.params.postId });
-
-  // Associate Post with comment
-  parentPost.comments.pop(comment._id);
-  await parentPost.save();
-
-  await Post.findByIdAndDelete(req.params.id)
-  .then(() => res.json('Post deleted.'))
-  .catch(err => res.status(400).json('Error: ' + err));
-  await comment.save();
-
-  // Associate Post with comment
-  parentPost.comments.pull(comment._id);
-  await parentPost.save();
-
-  res.send(comment);
-});
-
-//Read comments
-
-router.get("/:postId/comments", async (req, res) => {
-  const post = await Post.findOne({ _id: req.params.postId }).populate(
-    "comments"
-  );
-  res.send(post);
-});
-
-//Like a comment
-router.post('/:userId/:commentId/like', async (req, res) => {
-  //Find user and comment
-  const user = await User.findOne({ _id: req.params.userId });
-  const comment = await Comment.findOne({ _id: req.params.commentId });
-
-  //Like post
-  const like = new Like();
-  like.likedBy = user._id;
-  like.comment = comment._id;
-  like.save()
-  .then(() => res.json('Liked!'))
-  .catch(err => res.status(400).json('Error: ' + err));
-
-  // Associate like with comment
-  comment.likes.push(like._id);
-  like.save()
-  .then(() => res.json('Likes updated!'))
-  .catch(err => res.status(400).json('Error: ' + err));
-
-  res.send(like);
-});
+router.delete('/deletepost/:postId',requireLogin,(req,res)=>{
+  Post.findOne({_id:req.params.postId})
+  .populate("postedBy","_id")
+  .exec((err,post)=>{
+      if(err || !post){
+          return res.status(422).json({error:err})
+      }
+      if(post.postedBy._id.toString() === req.user._id.toString()){
+            post.remove()
+            .then(result=>{
+                res.json(result)
+            }).catch(err=>{
+                console.log(err)
+            })
+      }
+  })
+})
 
 module.exports = router;
