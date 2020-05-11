@@ -13,18 +13,19 @@ router.get('/protected',requireLogin,(req,res)=>{
 })
 
 router.post('/signup',(req,res)=>{
-  const {username,email,password,userType} = req.body 
-  if(!email || !password || !username || !userType){
+  const {name,username,email,password,userType} = req.body 
+  if(!name || !email || !password || !username || !userType){
      return res.status(422).json({error:"please add all the fields"})
   }
   User.findOne({username:username})
   .then((savedUser)=>{
       if(savedUser){
-        return res.status(422).json({error:"user already exists with that email"})
+        return res.status(422).json({error:"user already exists with that username or email"})
       }
       bcrypt.hash(password,10)
       .then(hashedpassword=>{
             const user = new User({
+                name,
                 username,
                 email,
                 password:hashedpassword,
@@ -68,8 +69,8 @@ router.post('/signin',(req,res)=>{
             if(doMatch){
                  //res.json({message:"successfully signed in"})
                const token = jwt.sign({_id:savedUser._id},JWT_SECRET)
-               const {_id,username,email,userType} = savedUser
-               res.json({token,user:{_id,username,email,userType}})
+               const {_id,name,username,email,userType} = savedUser
+               res.json({token,user:{_id,name,username,email,userType}})
             }
             else{
                 return res.status(422).json({error:"Invalid Email or password"})

@@ -1,30 +1,33 @@
 const router = require('express').Router();
 let Post = require('../models/post.model');
+let UserProfile = require('../models/userProfile.model');
 const requireLogin = require('../middleware/requireLogin')
 
 router.get('/allposts', requireLogin, async (req, res) => {
   await Post.find()
+    .populate("postedBy","_id name")
     .then(posts => res.json(posts))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
 //Create post
 router.post('/createpost',requireLogin,(req,res)=>{
-  const {body,pic} = req.body 
-  if(!body){
+
+    const {body,pic} = req.body 
+    if(!body){
     return  res.status(422).json({error:"Plase add all the fields"})
-  }
-  const post = new Post({
-      body,
-      photo:pic,
-      postedBy:req.user
-  })
-  post.save().then(result=>{
-      res.json({post:result})
-  })
-  .catch(err=>{
-      console.log(err)
-  })
+    }
+    const post = new Post({
+        body,
+        photo:pic,
+        postedBy:req.user
+    })
+    post.save().then(result=>{
+        res.json({post:result})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
 })
 
 router.get('/mypost',requireLogin,(req,res)=>{

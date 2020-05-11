@@ -5,11 +5,10 @@ const userProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true},
-  firstName: { type: String, required: true},
-  lastName: { type: String, required: true }, 
+  name: { type: String, required: true},
   gender: { type: String, required: true },
   //dateofBirth: {type:Date, required: true},
-  photo: {type: String},
+  photo: {type: String, required: true },
   followers:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"

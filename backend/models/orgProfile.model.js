@@ -7,8 +7,8 @@ const orgProfileSchema = new mongoose.Schema({
     required: true},
   name: { type: String, required: true},
   about: { type: String, required: true }, 
-  dateEstablished: {type:Date, required: true},
-  profilePhoto: {type: String},
+  //dateEstablished: {type:Date, required: true},
+  photo: {type: String},
   category:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: "OrgCategory"
