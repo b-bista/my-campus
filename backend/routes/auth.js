@@ -53,6 +53,19 @@ router.post('/signup',(req,res)=>{
   })
 })
 
+router.put('/updatepic',requireLogin,(req,res)=>{
+    User.findByIdAndUpdate(req.user._id,{
+        $set:{photo:req.body.photo}
+    },{
+        new:true
+    }).exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }else{
+            res.json(result)
+        }
+    })
+  })
 
 router.post('/signin',(req,res)=>{
     const {username,password} = req.body

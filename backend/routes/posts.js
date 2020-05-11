@@ -5,7 +5,8 @@ const requireLogin = require('../middleware/requireLogin')
 
 router.get('/allposts', requireLogin, async (req, res) => {
   await Post.find()
-    .populate("postedBy","_id name")
+    .populate("postedBy","_id name photo")
+    .populate("comments.postedBy","_id name photo")
     .then(posts => res.json(posts))
     .catch(err => res.status(400).json('Error: ' + err));
 });

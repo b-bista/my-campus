@@ -70,7 +70,7 @@ const Home  = () =>{
       })
   }
 
-  const makeComment = (text,postId)=>{
+  const makeComment = (body,postId)=>{
         fetch('http://localhost:6000/comment',{
             method:"put",
             headers:{
@@ -79,7 +79,7 @@ const Home  = () =>{
             },
             body:JSON.stringify({
                 postId,
-                text
+                body
             })
         }).then(res=>res.json())
         .then(result=>{
@@ -128,7 +128,7 @@ const Home  = () =>{
                             <div class="media">
                               <div class="media-left">
                                 <figure class="image is-48x48">
-                                  <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"></img>
+                                  <img src={item.postedBy.photo} alt="Placeholder image"></img>
                                 </figure>
                               </div>
                   
@@ -152,6 +152,18 @@ const Home  = () =>{
                               <a onClick={()=>{likePost(item._id)}} className="card-footer-item">Like<i class="fas fa-heart"></i></a>
                               <a to="" className="card-footer-item">Comment<i class="fas fa-comment-alt"></i></a>
                             </footer>
+
+                            <form onSubmit={(e)=>{
+                                  makeComment(e.target[0].value,item._id)}}style={{margin:"20px 0 40px 0"}}> 
+                              <label class="label">Post a comment</label>
+                              <div class="control">
+                              <input
+                                placeholder="Post a comment"
+                                class="input is-success is-rounded is-fullwidth"
+                                type="text"
+                              />
+                              </div>
+                            </form>
       
                             {
                               item.comments.map(record=>{
@@ -160,19 +172,16 @@ const Home  = () =>{
                                     <article class="media">
                                         <figure class="media-left">
                                           <p class="image is-32x32">
-                                            <img src="https://bulma.io/images/placeholders/128x128.png"></img>
+                                            <img src={record.postedBy.photo}></img>
                                           </p>
                                         </figure>
                                         <div class="media-content">
                                           <div class="content">
                                             <p>
-                                              {record.postedBy._id}
+                                              {record.postedBy.name}
                                               <br></br>
                                               {record.body}
                                               <br></br>
-                                                <small>
-                                                  Time posted
-                                                </small>
                                             </p>
                                           </div>
                                         </div>
