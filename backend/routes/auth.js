@@ -29,7 +29,7 @@ router.post('/signup',(req,res)=>{
                 username,
                 email,
                 password:hashedpassword,
-                userType
+                userType,
             })
     
             user.save()

@@ -14,7 +14,7 @@ router.get('/allposts', requireLogin, async (req, res) => {
 router.post('/createpost',requireLogin,(req,res)=>{
 
     const {body,pic} = req.body 
-    if(!body){
+    if(!body || !pic){
     return  res.status(422).json({error:"Plase add all the fields"})
     }
     const post = new Post({

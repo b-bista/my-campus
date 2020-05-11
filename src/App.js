@@ -1,45 +1,68 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import './App.css';
+import React,{useEffect,createContext,useReducer,useContext} from 'react'
+import './App.css'
+import {BrowserRouter,Route,Switch,useHistory} from 'react-router-dom'
+import {reducer,initialState} from './reducers/userReducer'
+import SignIn from './components/SignIn/SignIn'
+import Header from './components/Header/Header'
+import Home from './components/Home/Home'
+import Forum from './components/Forum/Forum'
+import Events from './components/Events/Events'
+import EventPage from './components/EventPage/EventPage'
+import OrgPage from './components/OrgPage/OrgPage'
+import Orgs from './components/Orgs/Orgs'
+export const UserContext = createContext()
 
-import Login from './components/Login/Login';
-import Header from './components/Header/Header';
-// import Footer from './components/Footer/Footer';
-import Home from './components/Home/Home';
-import Forum from './components/Forum/Forum';
-import Post from './components/Post/Post';
-import Create from './components/Post/Create'
-import Events from './components/Events/Events';
-import EventPage from './components/EventPage/EventPage';
-import Messages from './components/Messages/Messages';
-import Orgs from './components/Orgs/Orgs';
+const Routing = ()=>{
+  const history = useHistory()
+  const {state,dispatch} = useContext(UserContext)
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user"))
+    if(user){
+      dispatch({type:"USER",payload:user})
+    }else{
+      if(!history.location.pathname.startsWith('/reset'))
+           history.push('/signin')
+    }
+  },[])
+  return(
+    <Switch>
+      <Route exact path="/" >
+      <Home />
+      </Route>
+      <Route path="/signin">
+        <SignIn />
+      </Route>
+      <Route path="/events/">
+        <Events />
+      </Route>
+      <Route path="/events/:eventid">
+        <EventPage />
+      </Route>
+      <Route path="/orgs">
+        <Orgs/>
+      </Route>
+      <Route path="/orgs/:orgid">
+        <OrgPage/>
+      </Route>
+      <Route path="/forums">
+        <Forum/>
+      </Route>
 
-
+      
+    </Switch>
+  )
+}
 
 function App() {
+  const [state,dispatch] = useReducer(reducer,initialState)
   return (
-    <Router>
-    <div className="App">
-      <Router>
-        <Header/>
-          <Switch>
-          <Route exact path="/" component={Login} /> 
-          <Route path="/Home" component={Home} />
-          <Route path="/Events" component={Events} />
-          <Route path="/EventPage" component={EventPage} />
-          <Route path="/Orgs" component={Orgs} />
-          {/* <React path="/OrgPage" component={OrgPage}/>  */}
-          <Route path="/Forum" component={Forum} />
-          <Route path="/Messages" component={Messages} />
-          <Route path="/Post" component={Post}/>
-          <Route path="/Create" component={Create}/>
-          
-          </Switch>
-        {/* <Footer/> */}
-      </Router>
+    <UserContext.Provider value={{state,dispatch}}>
+    <BrowserRouter>
+      <Header />
+      <Routing />
       
-    </div>
-    </Router>
+    </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 
