@@ -1,78 +1,111 @@
 const router = require('express').Router();
 let Event = require('../models/event.model');
+const requireLogin = require('../middleware/requireLogin')
 
-//Read
-router.route('/').get((req, res) => {
-  Event.find()
-    .then(events => res.json(events))
+router.get('/allevents', requireLogin, async (req, res) => {
+  await Event.find()
+    .populate("hostedBy","_id name photo userType")
+    .populate("comments.postedBy","_id name photo")
+    .then(posts => res.json(posts))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-//Create
-router.route('/add').post((req, res) => {
-  const eventname = req.body.eventname;
-  const username = req.body.username;
-  const location = req.body.location;
-  const datefrom = req.body.datefrom;
-  const dateto = req.body.dateto;
-  const eventtype = req.body.eventtype;
-  const eventdescription = req.body.eventdescription;
-  const eventphoto = req.body.eventphoto;
-  const eventrsvp = req.body.eventrsvp;
-  const date = req.body.date;
+//Create post
+router.post('/createpost',requireLogin,(req,res)=>{
 
-  const newEvent = new Event({
-    eventname,
-    username, 
-    location,
-    datefrom,
-    dateto,
-    eventtype,
-    eventdescription,
-    eventphoto,
-    eventrsvp,
-    date
-      });
-
-  newEvent.save()
-    .then(() => res.json('Event added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-//Read by id
-router.route('/:id').get((req, res) => {
-  Event.findById(req.params.id)
-    .then(event => res.json(event))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-//Delete by id
-router.route('/:id').delete((req, res) => {
-  Event.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Event deleted.'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-//Update by id
-router.route('/update/:id').post((req, res) => {
-  Event.findById(req.params.id)
-    .then(event => {
-      event.eventname = req.body.eventname;
-      event.username = req.body.username;
-      event.location = req.body.location;
-      event.datefrom = req.body.datefrom;
-      event.dateto = req.body.dateto;
-      event.eventtype = req.body.eventtype;
-      event.eventdescription = req.body.eventdescription;
-      event.eventphoto = req.body.eventphoto;
-      event.eventrsvp = req.body.eventrsvp;
-      event.date = req.body.date;
-
-      event.save()
-        .then(() => res.json('Event updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+    const {body,pic} = req.body 
+    if(!body || !pic){
+    return  res.status(422).json({error:"Plase add all the fields"})
+    }
+    const post = new Post({
+        body,
+        photo:pic,
+        postedBy:req.user
     })
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+    post.save().then(result=>{
+        res.json({post:result})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+router.get('/mypost',requireLogin,(req,res)=>{
+  Post.find({postedBy:req.user._id})
+  .populate("PostedBy","_id name")
+  .then(mypost=>{
+      res.json({mypost})
+  })
+  .catch(err=>{
+      console.log(err)
+  })
+})
+
+router.put('/like',requireLogin,(req,res)=>{
+  Post.findByIdAndUpdate(req.body.postId,{
+      $push:{likes:req.user._id}
+  },{
+      new:true
+  }).exec((err,result)=>{
+      if(err){
+          return res.status(422).json({error:err})
+      }else{
+          res.json(result)
+      }
+  })
+})
+router.put('/unlike',requireLogin,(req,res)=>{
+  Post.findByIdAndUpdate(req.body.postId,{
+      $pull:{likes:req.user._id}
+  },{
+      new:true
+  }).exec((err,result)=>{
+      if(err){
+          return res.status(422).json({error:err})
+      }else{
+          res.json(result)
+      }
+  })
+})
+
+
+router.put('/comment',requireLogin,(req,res)=>{
+  const comment = {
+      body:req.body.body,
+      postedBy:req.user._id
+  }
+  Post.findByIdAndUpdate(req.body.postId,{
+      $push:{comments:comment}
+  },{
+      new:true
+  })
+  .populate("comments.postedBy","_id name")
+  .populate("postedBy","_id name")
+  .exec((err,result)=>{
+      if(err){
+          return res.status(422).json({error:err})
+      }else{
+          res.json(result)
+      }
+  })
+})
+
+router.delete('/deletepost/:postId',requireLogin,(req,res)=>{
+  Post.findOne({_id:req.params.postId})
+  .populate("postedBy","_id")
+  .exec((err,post)=>{
+      if(err || !post){
+          return res.status(422).json({error:err})
+      }
+      if(post.postedBy._id.toString() === req.user._id.toString()){
+            post.remove()
+            .then(result=>{
+                res.json(result)
+            }).catch(err=>{
+                console.log(err)
+            })
+      }
+  })
+})
 
 module.exports = router;

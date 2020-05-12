@@ -1,6 +1,5 @@
 const router = require('express').Router();
 let Post = require('../models/post.model');
-let UserProfile = require('../models/userProfile.model');
 const requireLogin = require('../middleware/requireLogin')
 
 router.get('/allposts', requireLogin, async (req, res) => {
