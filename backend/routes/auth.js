@@ -13,8 +13,8 @@ router.get('/protected',requireLogin,(req,res)=>{
 })
 
 router.post('/signup',(req,res)=>{
-  const {name,username,email,password,userType} = req.body 
-  if(!name || !email || !password || !username || !userType){
+  const {name,username,email,password,userType, photo} = req.body 
+  if(!name || !email || !password || !username || !userType || !photo){
      return res.status(422).json({error:"please add all the fields"})
   }
   User.findOne({username:username})
@@ -28,6 +28,7 @@ router.post('/signup',(req,res)=>{
                 name,
                 username,
                 email,
+                photo,
                 password:hashedpassword,
                 userType,
             })

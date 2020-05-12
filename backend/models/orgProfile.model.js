@@ -8,7 +8,15 @@ const orgProfileSchema = new mongoose.Schema({
   name: { type: String, required: true},
   about: { type: String, required: true }, 
   //dateEstablished: {type:Date, required: true},
-  photo: {type: String},
+  banner: {type: String},
+  followers:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
+  following: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
   category:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: "OrgCategory"

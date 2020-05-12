@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 function EventTile() {
-  return (  
+  return (
     <div className="EventTile">
       <Link to = "/EventPage">
       <div className="card">

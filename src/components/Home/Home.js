@@ -133,7 +133,11 @@ const Home  = () =>{
                               </div>
                   
                               <div class="media-content">
-                                <Link to={item.postedBy._id !== state._id?"/profile/"+item.postedBy._id :"/profile"  }>{item.postedBy.name}</Link>
+                                { (item.postedBy.userType=="org") ? 
+                                    <Link to={"/orgs/"+item.postedBy._id}>{item.postedBy.name}</Link>
+                                  :
+                                  <p>{item.postedBy.name}</p>
+                                }
                                 <p class="date-time-posted is-paddingless"><small>Posted at {item.createdAt}</small></p>
                               </div>
                             </div>

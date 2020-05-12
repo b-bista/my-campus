@@ -32,13 +32,16 @@ const Routing = ()=>{
       <Route path="/signin">
         <SignIn />
       </Route>
-      <Route path="/events/">
+      <Route exact path="/events/">
         <Events />
       </Route>
       <Route path="/events/:eventid">
         <EventPage />
       </Route>
-      <Route path="/orgs">
+      <Route path="/eventpage">
+        <EventPage />
+      </Route>
+      <Route exact path="/orgs">
         <Orgs/>
       </Route>
       <Route path="/orgs/:orgid">
