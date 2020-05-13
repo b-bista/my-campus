@@ -61,6 +61,13 @@ router.get('/users/:id',requireLogin,(req,res)=>{
     })
 })
 
+router.get('/allorgs',requireLogin,(req,res)=>{
+    OrgProfile.find()
+    .then(user=> res.json(user))
+    .catch(err=>res.status(404).json(err));
+});
+
+
 router.put('/follow',requireLogin,(req,res)=>{
   User.findByIdAndUpdate(req.body.followId,{
       $push:{followers:req.user._id}
