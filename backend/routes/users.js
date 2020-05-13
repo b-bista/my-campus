@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let User = require('../models/user.model')
+let Post = require('../models/user.model')
 let UserProfile = require('../models/userProfile.model')
 let OrgProfile = require('../models/orgProfile.model')
 const requireLogin = require('../middleware/requireLogin')

@@ -71,23 +71,23 @@ router.put('/updatepic',requireLogin,(req,res)=>{
 router.post('/signin',(req,res)=>{
     const {username,password} = req.body
     if(!username || !password){
-       return res.status(422).json({error:"please add email or password"})
+       return res.status(422).json({error:"Please add username or password"})
     }
     User.findOne({username:username})
     .then(savedUser=>{
         if(!savedUser){
-           return res.status(422).json({error:"Invalid Email or password"})
+           return res.status(422).json({error:"Invalid username or password"})
         }
         bcrypt.compare(password,savedUser.password)
         .then(doMatch=>{
             if(doMatch){
                  //res.json({message:"successfully signed in"})
                const token = jwt.sign({_id:savedUser._id},JWT_SECRET)
-               const {_id,name,username,email,userType} = savedUser
-               res.json({token,user:{_id,name,username,email,userType}})
+               const {_id,name,username,email,userType,followers,following,photo} = savedUser
+               res.json({token,user:{_id,name,username,email,userType,followers,following,photo}})
             }
             else{
-                return res.status(422).json({error:"Invalid Email or password"})
+                return res.status(422).json({error:"Invalid username or password"})
             }
         })
         .catch(err=>{

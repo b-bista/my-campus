@@ -41,6 +41,18 @@ router.get('/mypost',requireLogin,(req,res)=>{
   })
 })
 
+router.get('/allposts/:userId',requireLogin,(req,res)=>{
+    Post.find({postedBy:req.params.userId})
+    .populate("postedBy","_id name photo userType")
+    .populate("comments.postedBy","_id name photo")
+    .then(post=>{
+        res.json({post})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+  })
+
 router.put('/like',requireLogin,(req,res)=>{
   Post.findByIdAndUpdate(req.body.postId,{
       $push:{likes:req.user._id}
