@@ -8,15 +8,6 @@ const userProfileSchema = new mongoose.Schema({
   name: { type: String, required: true},
   gender: { type: String, required: true },
   //dateofBirth: {type:Date, required: true},
-  photo: {type: String, required: true },
-  followers:[{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  }],
-  following: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  }]
 }, {
   timestamps: true,
 });
