@@ -119,6 +119,8 @@ const OrgPage  = ()=>{
             dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
              localStorage.setItem("user",JSON.stringify(data))
              setProfile((prevState)=>{
+                  console.log(...prevState);
+                  
                  return {
                      ...prevState,
                      user:{

@@ -153,7 +153,14 @@ const Home  = () =>{
                             
                             <p className="post-like-count is-paddingless">{item.likes.length} likes</p>
                             <footer className="card-footer">
+                              {item.likes.includes(state._id)
+                              ? 
                               <a onClick={()=>{likePost(item._id)}} className="card-footer-item">Like<i class="fas fa-heart"></i></a>
+                              : 
+                              <a onClick={()=>{unlikePost(item._id)}} className="card-footer-item">Unlike<i class="fas fa-heart"></i></a>
+                              }
+
+                              
                               <a to="" className="card-footer-item">Comment<i class="fas fa-comment-alt"></i></a>
                             </footer>
 

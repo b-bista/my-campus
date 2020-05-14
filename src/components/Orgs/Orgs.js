@@ -76,7 +76,7 @@ const Orgs  = ()=>{
                   orgs.map(item=>{
                     return (
                       <div className="OrgTile">
-                      {<Link to={"/users/"+item.userId}>
+                      {<Link to={"/orgs/"+item.userId}>
                       <div className="card">
                         <div className="media" style={{padding: "20px"}}>
                               <div className="media-left">

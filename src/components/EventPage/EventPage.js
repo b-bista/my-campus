@@ -1,9 +1,30 @@
-import React from 'react';
-import './EventPage.css';
+import React,{useEffect,useState,useContext} from 'react'
+import {UserContext} from '../../App'
+import {useParams} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+const EventPage  = ()=>{
+    const [eventProfile,setProfile] = useState(null)
+    
+    const {state,dispatch} = useContext(UserContext)
+    const {eventid} = useParams()
+    useEffect(()=>{
+       fetch(`http://localhost:6000/events/${eventid}`,{
+           headers:{
+               "Authorization":"Bearer "+localStorage.getItem("jwt")
+           }
+       }).then(res=>res.json())
+       .then(result=>{
+           //console.log(result)
+         
+            setProfile(result)
+       })
+    },[])
+    
+    
+   return (
+     <>{eventProfile ?
 
-function EventPage() {
-  return (
-    <div className="EventPage">
+      <div style={{paddingTop: "20px"}}className="EventPage">
       <div className="container">
         <section className="section">
           <div className="columns is-centered">
@@ -13,31 +34,43 @@ function EventPage() {
                 <div className="card-content">
                   <div className="media">
                     <div className="media-content">
-                      <p className="">General Interest Meeting #1</p>
-                      <p className=""><small>Date: (date)</small></p>
-                      <p className=""><small>Address: (Address)</small></p>
+                      <p className="">{eventProfile.events.name}</p>
+                      <p className=""><small>From: {eventProfile.events.from} To: {eventProfile.events.to} </small></p>
+                      <p className=""><small>Address: {eventProfile.events.location}</small></p>
                     </div>
 
                     <div className="media-right">
-                      <button className="button is-rounded is-small">Going (12)</button><button className="button is-rounded is-small">Interested (34)</button>
+                      <button className="button is-rounded is-small">Going ({eventProfile.events.going.length})</button><button className="button is-rounded is-small">Interested ({eventProfile.events.going.length})</button>
                     </div>
                   </div>
 
                   <div className="card-image">
                     <figure className="image is-4by3">
-                      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image"></img>
+                      <img src={eventProfile.events.photo} alt="Placeholder image"></img>
                     </figure>
                   </div>
 
-                  <p className="post-content">Still court no small think death so an wrote. Incommode necessary no it behavior convinced distrusts an unfeeling he. 
-                  Could death since do we hoped is in. Exquisite no my attention extensive. The determine conveying moonlight age. Avoid for see marry sorry child. 
-                  Sitting so totally forbade hundred to. </p>
+                  <div style={{padding: "10px 0 20px 0"}}>
+                    <p className="post-content">{eventProfile.events.description}</p>
+                  </div>
+                  
 
-                  <p>Event Tags:</p>
+                  <p>Event Categories:</p>
+                  {
+                    eventProfile.events.categories.map(item=>{
+                      {
+                        if(item.name){
+                          return (
+                            <span className="button is-static is-rounded is-small">{item.name}</span>
+                          )
+                        }
+                        else
+                          return (<p>No tags</p>)
 
-                  <span className="button is-static is-rounded is-small">Tag 1</span>
-                  <span className="button is-static is-rounded is-small">Tag 2</span>
-                  <span className="button is-static is-rounded is-small">Tag 3</span>
+                      }
+                      
+                    })
+                  }
 
 
                 </div>
@@ -47,18 +80,22 @@ function EventPage() {
             <div className="column is-one-fifth">
               <div className="card is-paddingless">
                 <div className="card-content">
+                  <p className="has-text-centered is-medium">Hosted by:</p>
 
-                  <a><p className="has-text-centered">Organization Name</p></a>
-                  <div className="card-image">
-                    <figure className="image is-128x128" style={{margin: "auto"}}>
-                      <img className="is-rounded" src="https://bulma.io/images/placeholders/128x128.png"></img>
-                    </figure>
+                  <div style={{padding: "20px 0 20px 0"}}>
+                    <p style={{paddingBottom: "10px"}} className="has-text-centered">{eventProfile.events.hostedBy.name}</p>
+                    <div className="card-image">
+                      <figure className="image is-128x128" style={{margin: "auto"}}>
+                        <img className="is-rounded" src={eventProfile.events.hostedBy.photo}></img>
+                      </figure>
+                    </div>
                   </div>
-                  <p className="has-text-centered">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
+                    
 
                   <div class="has-text-centered">
-                    <button className="button is-rounded has-text-centered" style={{margin: "auto"}}>View full profile</button>
+                    <Link to={"/orgs/"+eventProfile.events.hostedBy._id}>
+                      <button className="button is-rounded has-text-centered" style={{margin: "auto"}}>View full profile</button>
+                    </Link>
                   </div>
 
                 </div>
@@ -69,7 +106,13 @@ function EventPage() {
         </section>
       </div>
     </div>
-  );
+
+  : <h2>Loading!</h2>}
+    
+    
+  </>
+   );
 }
 
-export default EventPage;
+
+export default EventPage

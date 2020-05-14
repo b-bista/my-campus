@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
-const eventSchema = new Schema({
+const eventSchema = new mongoose.Schema({
   name: { type: String, required: true},
-  hostedby: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "UserProfile",
-    required: true}, 
-  location: { type: String, required: true },
-  datefrom: { type: Date, required: true },
-  dateto: { type: Date, required: true },
   description: { type: String, required: true },
-  eventphoto: { type: String, required: true },
+  location: { type: String, required: true },
+  from: { type: Date, required: true },
+  to: { type: Date, required: true },
+  photo: { type: String},
+  hostedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User"},
+  categories: [{
+    name: String}],
   going: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"}],
