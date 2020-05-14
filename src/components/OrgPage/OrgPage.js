@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 const OrgPage  = ()=>{
     const [userProfile,setProfile] = useState(null)
     const [userPosts,setPosts] = useState(null)
+    const [userEvents,setEvents] = useState(null)
     
     const {state,dispatch} = useContext(UserContext)
     console.log(state)
@@ -31,6 +32,17 @@ const OrgPage  = ()=>{
            //console.log(result)
          
             setPosts(result)
+       })
+
+       fetch(`http://localhost:6000/events/by/${orgid}`,{
+           headers:{
+               "Authorization":"Bearer "+localStorage.getItem("jwt")
+           }
+       }).then(res=>res.json())
+       .then(result=>{
+           //console.log(result)
+         
+            setEvents(result)
        })
     },[])
 
@@ -225,6 +237,26 @@ const OrgPage  = ()=>{
                       </div>
                       <br></br>
                       The Organization's events go here
+                        {
+                          userEvents.events.map(item=>{
+                              return(
+                                <Link to={"/events/"+item._id}>
+                                  <div className="OrgEvents">
+                                    <div className="card">
+                                      <div className="media" style={{padding: "20px"}}>
+                                        <div className="media-content">
+                                          <p style={{fontSize: "1vw"}}>{item.name}</p>
+                                          <p style={{fontSize: ".6vw"}}>Date start {item.from}</p>
+                                          <p style={{fontSize: ".6vw"}}>{item.location}</p>
+                                          <p style={{fontSize: ".7vw"}}>{item.description}</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </Link>
+                              )
+                          })
+                        }
                     </div>
                   </div>
                 </div>

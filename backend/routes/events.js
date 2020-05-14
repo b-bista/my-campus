@@ -57,7 +57,7 @@ router.get('/events/:eventId',requireLogin,(req,res)=>{
     })
   })
 
-router.get('/events/:userId',requireLogin,(req,res)=>{
+router.get('/events/by/:userId',requireLogin,(req,res)=>{
     Event.find({hostedBy:req.params.userId})
     .populate("hostedBy","_id name")
     .then(events=>{

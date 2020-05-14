@@ -70,12 +70,12 @@ const Orgs  = ()=>{
                {
                  console.log(orgs)
                }
-               <h1 style={{fontSize: "2vw"}}>Search Current On-Campus Orgs</h1>
+               <h1 style={{fontSize: "2vw"}} className="has-text-centered">Search Current On-Campus Orgs</h1>
                <div className="container">
                 {
                   orgs.map(item=>{
                     return (
-                      <div className="OrgTile">
+                      <div style={{padding: "10px 0 20px 0"}} className="OrgTile">
                       {<Link to={"/orgs/"+item.userId}>
                       <div className="card">
                         <div className="media" style={{padding: "20px"}}>
