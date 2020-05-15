@@ -20,23 +20,6 @@ const Text = (props) => (
     </div>
     </div>
     </article>
-
-
-<article class="media-left">
-  <div class="media-content">
-    <div class="field">
-      <p class="control">
-        <textarea class="textarea" placeholder="Add a comment..."></textarea>
-      </p>
-    </div>
-    </div>
-    <div class="field">
-      <p class="control">
-        <button class="button">Comment</button>
-        <div className="clear"></div>
-      </p>
-    </div>
-</article>
     
     </div>
      </div>
