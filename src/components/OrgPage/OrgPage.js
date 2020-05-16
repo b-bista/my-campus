@@ -3,9 +3,46 @@ import {UserContext} from '../../App'
 import {useParams} from 'react-router-dom'
 import {Link} from 'react-router-dom'
 const OrgPage  = ()=>{
-    const [userProfile,setProfile] = useState(null)
-    const [userPosts,setPosts] = useState(null)
-    const [userEvents,setEvents] = useState(null)
+  const initialPosts = {
+    post: {
+      going: [],
+      interested: [],
+      _id: '',
+      name: '',
+      description: '',
+      location: '',
+      from: '',
+      to: '',
+      photo: '',
+      hostedBy: {
+          _id: '',
+          name: ''
+      },
+      categories: [],
+      createdAt: '',
+      updatedAt: ''
+    }
+  };
+
+  const initialEvents = {
+    events: {
+      going: [],
+      interested: [],
+      _id: '',
+      userId: '',
+      name: '',
+      about: '',
+      photo: '',
+      banner: '',
+      createdAt: '',
+      updatedAt: ''
+    }
+  };
+
+
+  const [userProfile,setProfile] = useState(null)
+  const [userPosts,setPosts] = useState(initialPosts)
+  const [userEvents,setEvents] = useState(initialEvents)
     
     const {state,dispatch} = useContext(UserContext)
     console.log(state)
@@ -18,7 +55,7 @@ const OrgPage  = ()=>{
            }
        }).then(res=>res.json())
        .then(result=>{
-           //console.log(result)
+           console.log(result)
          
             setProfile(result)
        })
@@ -29,7 +66,7 @@ const OrgPage  = ()=>{
            }
        }).then(res=>res.json())
        .then(result=>{
-           //console.log(result)
+           console.log(result)
          
             setPosts(result)
        })
@@ -40,7 +77,7 @@ const OrgPage  = ()=>{
            }
        }).then(res=>res.json())
        .then(result=>{
-           //console.log(result)
+           console.log(result)
          
             setEvents(result)
        })

@@ -1,7 +1,7 @@
 import React,{useState,useContext,} from 'react'
 import {Link,useHistory} from 'react-router-dom'
 import {UserContext} from '../../App'
-import M from 'materialize-css'
+import './SignIn.css'
 
 const SignIn  = ()=>{
     const {state,dispatch} = useContext(UserContext)
@@ -23,13 +23,11 @@ const SignIn  = ()=>{
       .then(data=>{
           console.log(data)
          if(data.error){
-            M.toast({html: data.error,classes:"#c62828 red darken-3"})
          }
          else{
              localStorage.setItem("jwt",data.token)
              localStorage.setItem("user",JSON.stringify(data.user))
              dispatch({type:"USER",payload:data.user})
-             M.toast({html:"signedin success",classes:"#43a047 green darken-1"})
              history.push('/')
              
          }
@@ -60,7 +58,7 @@ const SignIn  = ()=>{
             />
         </p>
         <p class="space">
-          <button class="button is-link is-medium is-overlay is-rounded is-centered" onClick={PostData()}>Login</button>
+          <button class="button is-link is-medium is-overlay is-rounded is-centered" onClick={PostData()}>Sign In</button>
         </p>
       </form>
     </div>
