@@ -23,11 +23,13 @@ const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const authRouter = require('./routes/auth');
 const eventsRouter = require('./routes/events');
+const forumPostsRouter = require('./routes/forumPosts');
 
 app.use(usersRouter);
 app.use(postsRouter);
 app.use(authRouter);
 app.use(eventsRouter);
+app.use(forumPostsRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

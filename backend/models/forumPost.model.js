@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const postSchema = new mongoose.Schema(
+const forumPostSchema = new mongoose.Schema(
 {
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -9,27 +9,22 @@ const postSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true},
+    topic: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ForumTopic",
+      required: true},
     comments: [{
       body: String,
       postedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-        },
-      likes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"}]
-      }],
-    likes: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-      }
-      ]
+        }
+      }]
     }, {
       timestamps: true,
   }
 );
 
-const ForumPost = mongoose.model('ForumPost', postSchema);
+const ForumPost = mongoose.model('ForumPost', forumPostSchema);
 
 module.exports = ForumPost;

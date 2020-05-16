@@ -1,5 +1,6 @@
-const router = require('express').Router();
-let ForumPost = require('../models/forumPost.model');
+const router = require('express').Router()
+let ForumPost = require('../models/forumPost.model')
+let ForumTopic = require('../models/forumTopic.model')
 const requireLogin = require('../middleware/requireLogin')
 
 router.get('/allforumposts', requireLogin, async (req, res) => {
@@ -13,15 +14,16 @@ router.get('/allforumposts', requireLogin, async (req, res) => {
 //Create forumPost
 router.post('/createforumpost',requireLogin,(req,res)=>{
 
-    const {title,description,photo} = req.body 
-    if(!title || !description || !photo){
+    const {title,description,photo,topic} = req.body 
+    if(!title || !description || !photo || !topic){
     return  res.status(422).json({error:"Plase add all the fields"})
     }
     const forumPost = new ForumPost({
         title,
         description,
+        topic,
         photo,
-        forumPostedBy:req.user
+        postedBy:req.user
     })
     forumPost.save().then(result=>{
         res.json({forumPost:result})
@@ -29,7 +31,31 @@ router.post('/createforumpost',requireLogin,(req,res)=>{
     .catch(err=>{
         console.log(err)
     })
+    ForumTopic.findByIdAndUpdate(req.body.topic,{
+        $push:{posts:result._id}
+    })
 })
+
+//Create forumTopic
+router.post('/createforumtopic',requireLogin,(req,res)=>{
+
+    const {title,description,photo} = req.body 
+    if(!title || !description || !photo){
+    return  res.status(422).json({error:"Plase add all the fields"})
+    }
+    const forumTopic = new ForumTopic({
+        title,
+        description,
+        photo
+    })
+    forumTopic.save().then(result=>{
+        res.json({forumTopic:result})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
 
 router.get('/myforumPost',requireLogin,(req,res)=>{
   ForumPost.find({forumPostedBy:req.user._id})
