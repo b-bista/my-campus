@@ -6,10 +6,27 @@ const requireLogin = require('../middleware/requireLogin')
 router.get('/allforumposts', requireLogin, async (req, res) => {
   await ForumPost.find()
   .populate("postedBy","_id name photo userType")
-  .populate("comments.forumPostedBy","_id name photo")
+  .populate("comments.postedBy","_id name photo")
     .then(forumPosts => res.json(forumPosts))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
+router.get('/allforumtopics', requireLogin, async (req, res) => {
+    await ForumTopic.find()
+      .then(forumTopics => res.json(forumTopics))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+
+router.get('/forumposts/:forumpostId',requireLogin,(req,res)=>{
+    ForumPost.findOne({_id:req.params.forumpostId})
+    .populate("topic","_id name")
+    .then(posts=>{
+        res.json({posts})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
 
 //Create forumPost
 router.post('/createforumpost',requireLogin,(req,res)=>{
@@ -32,8 +49,11 @@ router.post('/createforumpost',requireLogin,(req,res)=>{
         console.log(err)
     })
     ForumTopic.findByIdAndUpdate(req.body.topic,{
-        $push:{posts:result._id}
-    })
+        $push:{posts:forumPost._id}},{new:true}).then(result=>{
+            res.json(result)
+        }).catch(err=>{
+            return res.status(422).json({error:err})
+        })
 })
 
 //Create forumTopic
@@ -58,7 +78,7 @@ router.post('/createforumtopic',requireLogin,(req,res)=>{
 
 
 router.get('/myforumPost',requireLogin,(req,res)=>{
-  ForumPost.find({forumPostedBy:req.user._id})
+  ForumPost.find({postedBy:req.user._id})
   .populate("ForumPostedBy","_id name")
   .then(myforumPost=>{
       res.json({myforumPost})
@@ -68,10 +88,8 @@ router.get('/myforumPost',requireLogin,(req,res)=>{
   })
 })
 
-router.get('/allforumPosts/:userId',requireLogin,(req,res)=>{
-    ForumPost.find({forumPostedBy:req.params.userId})
-    .populate("forumPostedBy","_id name photo userType")
-    .populate("comments.forumPostedBy","_id name photo")
+router.get('/allforumposts/:topic',requireLogin, async (req,res)=>{
+    await ForumPost.find({topic:req.params.topic})
     .then(forumPost=>{
         res.json({forumPost})
     })
@@ -111,15 +129,15 @@ router.put('/unlike',requireLogin,(req,res)=>{
 router.put('/comment',requireLogin,(req,res)=>{
   const comment = {
       body:req.body.body,
-      forumPostedBy:req.user._id
+      postedBy:req.user._id
   }
   ForumPost.findByIdAndUpdate(req.body.forumPostId,{
       $push:{comments:comment}
   },{
       new:true
   })
-  .populate("comments.forumPostedBy","_id name")
-  .populate("forumPostedBy","_id name")
+  .populate("comments.postedBy","_id name")
+  .populate("postedBy","_id name")
   .exec((err,result)=>{
       if(err){
           return res.status(422).json({error:err})
@@ -129,22 +147,28 @@ router.put('/comment',requireLogin,(req,res)=>{
   })
 })
 
-router.delete('/deleteforumPost/:forumPostId',requireLogin,(req,res)=>{
-  ForumPost.findOne({_id:req.params.forumPostId})
-  .populate("forumPostedBy","_id")
-  .exec((err,forumPost)=>{
-      if(err || !forumPost){
-          return res.status(422).json({error:err})
-      }
-      if(forumPost.forumPostedBy._id.toString() === req.user._id.toString()){
-            forumPost.remove()
-            .then(result=>{
-                res.json(result)
-            }).catch(err=>{
-                console.log(err)
-            })
-      }
-  })
+router.delete('/deleteforumpost/:forumtopicid/:forumpostid',requireLogin,(req,res)=>{
+    ForumTopic.findByIdAndUpdate(req.params.forumtopicid,{
+        $pull:{posts:req.params.forumpostid}},{new:true}).then(result=>{
+            res.json(result)
+        }).catch(err=>{
+            return res.status(422).json({error:err})
+        })
+    ForumPost.findOne({_id:req.params.forumpostid})
+        .populate("postedBy","_id")
+        .exec((err,forumPost)=>{
+            if(err || !forumPost){
+                return res.status(422).json({error:err})
+            }
+            if(forumPost.postedBy._id.toString() === req.user._id.toString()){
+                forumPost.remove()
+                .then(result=>{
+                    res.json(result)
+                }).catch(err=>{
+                    console.log(err)
+                })
+            }
+    })
 })
 
 module.exports = router;

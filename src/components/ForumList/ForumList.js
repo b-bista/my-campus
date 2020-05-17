@@ -2,25 +2,26 @@ import React,{useEffect,useState,useContext} from 'react'
 import {UserContext} from '../../App'
 import {useParams} from 'react-router-dom'
 import {Link} from 'react-router-dom'
-import Card from './Card/Card.js';
-import './Forum.css';
+import './ForumList.css';
 
-const Forum = () => {
-  const [topics,setTopics] = useState([])
+const ForumList = () => {
+  const [posts,setPosts] = useState([])
   const {state,dispatch} = useContext(UserContext)
+  const {topicid} = useParams()
+
 
   useEffect(()=>{
-      fetch('http://localhost:6000/allforumtopics',{
-          headers:{
-              "Authorization":"Bearer "+localStorage.getItem("jwt")
-          }
+      fetch(`http://localhost:6000/allforumposts/${topicid}`,{
+        headers:{
+            "Authorization":"Bearer "+localStorage.getItem("jwt")
+        }
       }).then(res=>res.json())
       .catch(err=>{
       console.log(err)})
       .then(result=>{
           console.log(result)
         
-          setTopics(result)
+          setPosts(result)
       })
   },[])
 
@@ -33,10 +34,10 @@ const Forum = () => {
               <h1 className="subtitle is-4"> MyCampus Forums</h1>
               <div className="container">
                   {
-                    topics.map(item=>{
+                    posts.map(item=>{
                       return (
                         <div className="postcard">
-                          <Link to ={"/forums/"+item._id}>
+                          <Link >
                           <div className="card">
                             
                         <p className="card-header-title">{item.title}</p>
@@ -46,7 +47,7 @@ const Forum = () => {
                                 <br></br>
                                 {item.description}
                                 <hr></hr>
-                              <p>Posts: {item.posts.length}</p>
+                              <p>Comments: {item.comments.length}</p>
                               </div>
                             </div>
                           </div>
@@ -66,7 +67,7 @@ const Forum = () => {
 }
 
 
-export default Forum;
+export default ForumList;
 
 
 
