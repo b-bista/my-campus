@@ -11,7 +11,7 @@ const ForumList = () => {
 
 
   useEffect(()=>{
-      fetch(`http://localhost:6000/allforumposts/${topicid}`,{
+      fetch(`http://localhost:3001/allforumposts/${topicid}`,{
         headers:{
             "Authorization":"Bearer "+localStorage.getItem("jwt")
         }

@@ -3,53 +3,17 @@ import {UserContext} from '../../App'
 import {useParams} from 'react-router-dom'
 import {Link} from 'react-router-dom'
 const OrgPage  = ()=>{
-  const initialPosts = {
-    post: {
-      going: [],
-      interested: [],
-      _id: '',
-      name: '',
-      description: '',
-      location: '',
-      from: '',
-      to: '',
-      photo: '',
-      hostedBy: {
-          _id: '',
-          name: ''
-      },
-      categories: [],
-      createdAt: '',
-      updatedAt: ''
-    }
-  };
-
-  const initialEvents = {
-    events: {
-      going: [],
-      interested: [],
-      _id: '',
-      userId: '',
-      name: '',
-      about: '',
-      photo: '',
-      banner: '',
-      createdAt: '',
-      updatedAt: ''
-    }
-  };
-
 
   const [userProfile,setProfile] = useState(null)
-  const [userPosts,setPosts] = useState(initialPosts)
-  const [userEvents,setEvents] = useState(initialEvents)
+  const [userPosts,setPosts] = useState([])
+  const [userEvents,setEvents] = useState([])
     
     const {state,dispatch} = useContext(UserContext)
     console.log(state)
     const {orgid} = useParams()
     const [showfollow,setShowFollow] = useState(state? !state.following.includes(orgid) :true)
     useEffect(()=>{
-       fetch(`http://localhost:6000/users/${orgid}`,{
+       fetch(`http://localhost:3001/users/${orgid}`,{
            headers:{
                "Authorization":"Bearer "+localStorage.getItem("jwt")
            }
@@ -60,7 +24,7 @@ const OrgPage  = ()=>{
             setProfile(result)
        })
 
-       fetch(`http://localhost:6000/allposts/${orgid}`,{
+       fetch(`http://localhost:3001/allposts/${orgid}`,{
            headers:{
                "Authorization":"Bearer "+localStorage.getItem("jwt")
            }
@@ -71,20 +35,21 @@ const OrgPage  = ()=>{
             setPosts(result)
        })
 
-       fetch(`http://localhost:6000/events/by/${orgid}`,{
+       fetch(`http://localhost:3001/events/by/${orgid}`,{
            headers:{
                "Authorization":"Bearer "+localStorage.getItem("jwt")
            }
        }).then(res=>res.json())
        .then(result=>{
            console.log(result)
-         
+
             setEvents(result)
+            
        })
     },[])
 
     const likePost = (id)=>{
-      fetch('http://localhost:6000/like',{
+      fetch('http://localhost:3001/like',{
           method:"put",
           headers:{
               "Content-Type":"application/json",
@@ -110,7 +75,7 @@ const OrgPage  = ()=>{
     }
 
     const makeComment = (body,postId)=>{
-      fetch('http://localhost:6000/comment',{
+      fetch('http://localhost:3001/comment',{
           method:"put",
           headers:{
               "Content-Type":"application/json",
@@ -137,7 +102,7 @@ const OrgPage  = ()=>{
     }
 
     const deletePost = (postid)=>{
-      fetch(`http://localhost:6000/deletepost/${postid}`,{
+      fetch(`http://localhost:3001/deletepost/${postid}`,{
           method:"delete",
           headers:{
               Authorization:"Bearer "+localStorage.getItem("jwt")
@@ -153,7 +118,7 @@ const OrgPage  = ()=>{
     }
 
     const followUser = ()=>{
-        fetch('http://localhost:6000/follow',{
+        fetch('http://localhost:3001/follow',{
             method:"put",
             headers:{
                 "Content-Type":"application/json",
@@ -182,7 +147,7 @@ const OrgPage  = ()=>{
         })
     }
     const unfollowUser = ()=>{
-        fetch('http://localhost:6000/unfollow',{
+        fetch('http://localhost:3001/unfollow',{
             method:"put",
             headers:{
                 "Content-Type":"application/json",
@@ -211,6 +176,7 @@ const OrgPage  = ()=>{
              
         })
     }
+    debugger
    return (
      <>{userProfile ?
 
@@ -248,7 +214,8 @@ const OrgPage  = ()=>{
                       </div>
                       <br/>
                       <div class="has-text is-size-7">
-                      {userProfile.user.about}
+                      {
+                      userProfile.user.about}
                       </div>
                       <hr></hr>
                       <div class="has-text-weight-bold is-uppercase">
@@ -274,7 +241,7 @@ const OrgPage  = ()=>{
                       </div>
                       <br></br>
                       The Organization's events go here
-                        {
+                        { userEvents.events && 
                           userEvents.events.map(item=>{
                               return(
                                 <Link to={"/events/"+item._id}>
@@ -310,7 +277,8 @@ const OrgPage  = ()=>{
                   </div>
                 <br/>
                 <div className="column is-paddingless">
-                  {
+                  { 
+                    userPosts.post && 
                     userPosts.post.map(item=>{
                       return(
                           <div className="Post" key={item._id} style={{marginTop:"30px"}}>

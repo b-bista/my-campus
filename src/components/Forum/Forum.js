@@ -10,7 +10,7 @@ const Forum = () => {
   const {state,dispatch} = useContext(UserContext)
 
   useEffect(()=>{
-      fetch('http://localhost:6000/allforumtopics',{
+      fetch('http://localhost:3001/allforumtopics',{
           headers:{
               "Authorization":"Bearer "+localStorage.getItem("jwt")
           }

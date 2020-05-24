@@ -8,7 +8,7 @@ const Events  = ()=>{
     const {state,dispatch} = useContext(UserContext)
 
     useEffect(()=>{
-       fetch('http://localhost:6000/allevents',{
+       fetch('http://localhost:3001/allevents',{
            headers:{
                "Authorization":"Bearer "+localStorage.getItem("jwt")
            }

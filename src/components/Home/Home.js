@@ -7,7 +7,7 @@ const Home  = () =>{
   const [data,setData] = useState([])
   const {state,dispatch} = useContext(UserContext)
   useEffect(()=>{
-     fetch('http://localhost:6000/allposts',{
+     fetch('http://localhost:3001/allposts',{
          headers:{
              "Authorization":"Bearer "+localStorage.getItem("jwt")
          }
@@ -19,7 +19,7 @@ const Home  = () =>{
   },[])
 
   const likePost = (id)=>{
-        fetch('http://localhost:6000/like',{
+        fetch('http://localhost:3001/like',{
             method:"put",
             headers:{
                 "Content-Type":"application/json",
@@ -45,7 +45,7 @@ const Home  = () =>{
   }
   
   const unlikePost = (id)=>{
-        fetch('http://localhost:6000/unlike',{
+        fetch('http://localhost:3001/unlike',{
             method:"put",
             headers:{
                 "Content-Type":"application/json",
@@ -71,7 +71,7 @@ const Home  = () =>{
   }
 
   const makeComment = (body,postId)=>{
-        fetch('http://localhost:6000/comment',{
+        fetch('http://localhost:3001/comment',{
             method:"put",
             headers:{
                 "Content-Type":"application/json",
@@ -98,7 +98,7 @@ const Home  = () =>{
   }
 
   const deletePost = (postid)=>{
-      fetch(`http://localhost:6000/deletepost/${postid}`,{
+      fetch(`http://localhost:3001/deletepost/${postid}`,{
           method:"delete",
           headers:{
               Authorization:"Bearer "+localStorage.getItem("jwt")

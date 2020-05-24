@@ -8,7 +8,7 @@ const Orgs  = ()=>{
     const {state,dispatch} = useContext(UserContext)
 
     useEffect(()=>{
-       fetch('http://localhost:6000/allorgs',{
+       fetch('http://localhost:3001/allorgs',{
            headers:{
                "Authorization":"Bearer "+localStorage.getItem("jwt")
            }

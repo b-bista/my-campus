@@ -9,8 +9,8 @@ const SignIn  = ()=>{
     const [password,setPassword] = useState("")
     const [username,setUsername] = useState("")
 
-    const PostData = ()=>{
-      fetch("http://localhost:6000/signin",{
+    const PostData = () =>{
+      fetch("http://localhost:3001/signin",{
           method:"post",
           headers:{
               "Content-Type":"application/json"
@@ -58,7 +58,7 @@ const SignIn  = ()=>{
             />
         </p>
         <p class="space">
-          <button class="button is-link is-medium is-overlay is-rounded is-centered" onClick={PostData()}>Sign In</button>
+          <button class="button is-link is-medium is-overlay is-rounded is-centered" onClick={(e) => {e.preventDefault(); PostData()}}>Sign In</button>
         </p>
       </form>
     </div>
