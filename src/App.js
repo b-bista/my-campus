@@ -7,6 +7,7 @@ import Header from './components/Header/Header'
 import Home from './components/Home/Home'
 import Forum from './components/Forum/Forum'
 import ForumList from './components/ForumList/ForumList'
+import ForumPost from './components/ForumPost/ForumPost'
 import Events from './components/Events/Events'
 import EventPage from './components/EventPage/EventPage'
 import OrgPage from './components/OrgPage/OrgPage'
@@ -53,6 +54,9 @@ const Routing = ()=>{
       </Route>
       <Route path="/forums/:topicid">
         <ForumList/>
+      </Route>
+      <Route path="/forumpost/:postid">
+        <ForumPost/>
       </Route>
       
     </Switch>

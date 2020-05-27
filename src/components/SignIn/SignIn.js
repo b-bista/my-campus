@@ -52,7 +52,7 @@ const SignIn  = ()=>{
         <input
             placeholder="Password"
             class="input is-rounded is-fullwidth"
-            type="text"
+            type="password"
             value={password}
             onChange={(e)=>setPassword(e.target.value)}
             />

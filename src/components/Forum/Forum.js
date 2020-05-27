@@ -33,6 +33,7 @@ const Forum = () => {
               <h1 className="subtitle is-4"> MyCampus Forums</h1>
               <div className="container">
                   {
+                    topics &&
                     topics.map(item=>{
                       return (
                         <div className="postcard">

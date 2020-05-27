@@ -34,10 +34,11 @@ const ForumList = () => {
               <h1 className="subtitle is-4"> MyCampus Forums</h1>
               <div className="container">
                   {
-                    posts.map(item=>{
+                    posts.forumPost &&
+                    posts.forumPost.map(item=>{
                       return (
                         <div className="postcard">
-                          <Link >
+                          <Link to ={"/forumpost/"+item._id}>
                           <div className="card">
                             
                         <p className="card-header-title">{item.title}</p>

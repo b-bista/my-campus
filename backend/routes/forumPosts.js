@@ -20,6 +20,8 @@ router.get('/allforumtopics', requireLogin, async (req, res) => {
 router.get('/forumposts/:forumpostId',requireLogin,(req,res)=>{
     ForumPost.findOne({_id:req.params.forumpostId})
     .populate("topic","_id name")
+    .populate("postedBy","_id name photo")
+    .populate("comments.postedBy","_id name photo")
     .then(posts=>{
         res.json({posts})
     })
@@ -126,12 +128,12 @@ router.put('/unlike',requireLogin,(req,res)=>{
 })
 
 
-router.put('/comment',requireLogin,(req,res)=>{
+router.put('/commentForum',requireLogin,(req,res)=>{
   const comment = {
       body:req.body.body,
       postedBy:req.user._id
   }
-  ForumPost.findByIdAndUpdate(req.body.forumPostId,{
+  ForumPost.findByIdAndUpdate(req.body.postId,{
       $push:{comments:comment}
   },{
       new:true
