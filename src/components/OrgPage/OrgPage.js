@@ -11,7 +11,7 @@ const OrgPage  = ()=>{
     const {state,dispatch} = useContext(UserContext)
     console.log(state)
     const {orgid} = useParams()
-    const [showfollow,setShowFollow] = useState(state? !state.following.includes(orgid) :true)
+    const [showfollow,setShowFollow] = useState(state && state.following.includes(orgid) ? false : true)
     useEffect(()=>{
        fetch(`http://localhost:3001/users/${orgid}`,{
            headers:{
@@ -133,13 +133,13 @@ const OrgPage  = ()=>{
             dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
              localStorage.setItem("user",JSON.stringify(data))
              setProfile((prevState)=>{
-                  console.log(...prevState);
+                  console.log(prevState);
                   
                  return {
                      ...prevState,
                      user:{
                          ...prevState.user,
-                         followers:[...prevState.user.followers,data._id]
+                         followers:[prevState.user.followers,data._id]
                         }
                  }
              })
@@ -163,7 +163,7 @@ const OrgPage  = ()=>{
              localStorage.setItem("user",JSON.stringify(data))
             
              setProfile((prevState)=>{
-                const newFollower = prevState.user.followers.filter(item=>item != data._id )
+                const newFollower = prevState.user && prevState.user.followers.filter(item=>item != data._id )
                  return {
                      ...prevState,
                      user:{
@@ -176,7 +176,7 @@ const OrgPage  = ()=>{
              
         })
     }
-    debugger
+
    return (
      <>{userProfile ?
 
