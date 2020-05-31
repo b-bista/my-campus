@@ -11,7 +11,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### `nodemon server` in the backend directory
 
-Runs the webserver on port 6000. Chrome may block it so exception has to be handled<br />
+Runs the webserver on port 3001.<br />
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
