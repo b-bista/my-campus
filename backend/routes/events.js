@@ -1,7 +1,9 @@
 const router = require('express').Router();
 let Event = require('../models/event.model');
+let EventCategory = require('../models/eventCategory.model');
 const requireLogin = require('../middleware/requireLogin')
 
+//Get all events
 router.get('/allevents', requireLogin, async (req, res) => {
   await Event.find()
     .populate("hostedBy","_id name photo")
@@ -86,5 +88,25 @@ router.delete('/deleteevent/:eventId',requireLogin,(req,res)=>{
       }
   })
 })
+
+//Read
+router.get('/eventCategories',requireLogin,(req, res) => {
+    EventCategory.find()
+      .then(categories => res.json(categories))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+  
+//Create
+router.post('/addEventCategory',requireLogin,(req, res) => {
+const {name} = req.body 
+
+const newEventCategory = new EventCategory({
+    name
+    });
+
+newEventCategory.save()
+    .then(() => res.json('EventCategory added!'))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
 
 module.exports = router;

@@ -12,7 +12,8 @@ const eventSchema = new mongoose.Schema({
     required: true,
     ref: "User"},
   categories: [{
-    name: String}],
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "EventCategory"}],
   going: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"}],

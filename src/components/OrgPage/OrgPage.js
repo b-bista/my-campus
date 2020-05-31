@@ -74,6 +74,32 @@ const OrgPage  = ()=>{
       })
     }
 
+    const unlikePost = (id)=>{
+      fetch('http://localhost:3001/unlike',{
+          method:"put",
+          headers:{
+              "Content-Type":"application/json",
+              "Authorization":"Bearer "+localStorage.getItem("jwt")
+          },
+          body:JSON.stringify({
+              postId:id
+          })
+      }).then(res=>res.json())
+      .then(result=>{
+        //   console.log(result)
+        const newData = userPosts.map(item=>{
+            if(item._id==result._id){
+                return result
+            }else{
+                return item
+            }
+        })
+        setPosts(newData)
+      }).catch(err=>{
+        console.log(err)
+    })
+    }
+
     const makeComment = (body,postId)=>{
       fetch('http://localhost:3001/comment',{
           method:"put",
@@ -313,7 +339,12 @@ const OrgPage  = ()=>{
                                 
                                 <p className="post-like-count is-paddingless">{item.likes.length} likes</p>
                                 <footer className="card-footer">
+                                {item.likes.includes(state._id)
+                                  ? 
+                                  <a onClick={()=>{unlikePost(item._id)}} className="card-footer-item">Unlike<i class="fas fa-heart"></i></a>
+                                  : 
                                   <a onClick={()=>{likePost(item._id)}} className="card-footer-item">Like<i class="fas fa-heart"></i></a>
+                                }
                                   <a to="" className="card-footer-item">Comment<i class="fas fa-comment-alt"></i></a>
                                 </footer>
     

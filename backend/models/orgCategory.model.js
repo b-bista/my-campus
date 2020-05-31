@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const orgCategorySchema = new mongoose.Schema({
-  name: { type: String, required: true},
-  org: [{ type: String, required: true }]
+  name: { type: String, required: true}
 }, {
   timestamps: true,
 });

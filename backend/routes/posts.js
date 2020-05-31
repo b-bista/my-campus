@@ -4,6 +4,7 @@ const requireLogin = require('../middleware/requireLogin')
 
 router.get('/allposts', requireLogin, async (req, res) => {
   await Post.find()
+    .sort({createdAt: -1})
     .populate("postedBy","_id name photo userType")
     .populate("comments.postedBy","_id name photo")
     .then(posts => res.json(posts))
@@ -15,7 +16,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
 
     const {body,pic} = req.body 
     if(!body || !pic){
-    return  res.status(422).json({error:"Plase add all the fields"})
+    return  res.status(422).json({error:"Please add all the fields"})
     }
     const post = new Post({
         body,

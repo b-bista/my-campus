@@ -1,6 +1,7 @@
-const router = require('express').Router();
+const router = require('express').Router()
 let User = require('../models/user.model')
 let Post = require('../models/user.model')
+let OrgCategory = require('../models/orgCategory.model')
 let UserProfile = require('../models/userProfile.model')
 let OrgProfile = require('../models/orgProfile.model')
 const requireLogin = require('../middleware/requireLogin')
@@ -110,5 +111,26 @@ router.put('/unfollow',requireLogin,(req,res)=>{
   }
   )
 })
+
+//Read
+router.get('/orgCategories',requireLogin,(req, res) => {
+    OrgCategory.find()
+      .then(categories => res.json(categories))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+  
+//Create
+router.post('/addOrgCategory',requireLogin,(req, res) => {
+const {name} = req.body 
+
+const newOrgCategory = new OrgCategory({
+    name
+    });
+
+newOrgCategory.save()
+    .then(() => res.json('OrgCategory added!'))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 
 module.exports = router;
