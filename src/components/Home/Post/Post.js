@@ -1,89 +1,148 @@
-import React from 'react';
-import axios from 'axios';
-import Comment from './Comment/Comment';
-import './Post.css';
-import { Link } from 'react-router-dom';
+import React, { useContext, useRef } from "react";
+import Comment from "./Comment/Comment";
+import { timeAgo } from "../../../miscHelperFunctions/helperFunctions";
+import { UserContext } from "../../../App";
+import "./Post.css";
 
-class Post extends React.Component {
+import { Link } from "react-router-dom";
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: this.props.id,
-      body: this.props.body,
-      photo: this.props.photo,
-      postedBy: this.props.postedBy,
-      date: this.props.date,
-      comments: []};
-    }
-   
-    //'http://localhost:6000/posts/'+this.state.id.toString()+'comments'
-    componentDidMount() {
-      axios.get('http://localhost:6000/posts/5eb4dd08d349ad2480efe56b/comments')
-        .then(response => {
-          this.setState({ comments: response.data.comments})
-          console.log(this.state.comments);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    }
+const Post = (props) => {
+  const { postData, likePost, unlikePost, deletePost, makeComment } = props;
+  const { state, dispatch } = useContext(UserContext);
 
-    commentList() {
-      return this.state.comments.map(currentcomment => {
-        return <Comment 
-        body={currentcomment.body}  
-        postedBy={currentcomment.postedBy}
-        date={currentcomment.createdAt}
-        //userIcon={}
-        //likeCount={}
-        />
-      });
-  }
+  const commentRef = useRef(null);
 
-  render(){
-    return (
-      <div className="Post">
-        <div className="post card">
-          <div className="card-content">
-            
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-48x48">
-                  <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"></img>
-                </figure>
-              </div>
-  
-              <div class="media-content">
-                <a class="user-name is-paddingless">{this.state.postedBy}</a>
-                <p class="date-time-posted is-paddingless"><small>Posted at {this.state.date}</small></p>
-              </div>
-            </div>
-  
-            <p class="post-content">{this.state.body}</p>
-  
-            
-  
-            <div className="post-image card-image">
-              <figure className="image is-4by3">
-                <img src={this.state.photo} alt="Placeholder image"></img>
+  const relativeTime = timeAgo(postData.createdAt);
+
+  return (
+    <div className="Post" key={postData._id} style={{ marginTop: "30px" }}>
+      <div className="post card">
+        <div className="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img
+                  src={postData.postedBy.photo}
+                  alt="Placeholder image"
+                ></img>
               </figure>
             </div>
-  
-            
-            <p className="post-like-count is-paddingless">X likes</p>
-            <footer className="card-footer">
-              <Link to="" className="card-footer-item">Like<i class="fas fa-heart"></i></Link>
-              <Link to="" className="card-footer-item">Comment<i class="fas fa-comment-alt"></i></Link>
-            </footer>
 
-            { this.commentList() }
+            <div class="media-content">
+              {postData.postedBy.userType == "org" ? (
+                <Link to={"/orgs/" + postData.postedBy._id}>
+                  {postData.postedBy.name}
+                </Link>
+              ) : (
+                <p>{postData.postedBy.name}</p>
+              )}
+              <p class="date-time-posted is-paddingless">
+                <small>Posted {relativeTime}</small>
+              </p>
+            </div>
+            {postData.postedBy._id === state._id && (
+              <div class="media-right">
+                <button
+                  class="delete"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deletePost(postData._id);
+                  }}
+                ></button>
+              </div>
+            )}
           </div>
+
+          <p class="post-content">{postData.body}</p>
+
+          <div className="post-image card-image">
+            <figure className="image is-4by3">
+              <img src={postData.photo} alt="Placeholder image"></img>
+            </figure>
+          </div>
+
+          <p className="post-like-count is-paddingless">
+            {postData.likes.length} likes
+          </p>
+          <footer className="card-footer">
+            {postData.likes.includes(state._id) ? (
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  unlikePost(postData._id);
+                }}
+                className="card-footer-item"
+              >
+                Unlike<i class="fas fa-heart"></i>
+              </a>
+            ) : (
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  likePost(postData._id);
+                }}
+                className="card-footer-item"
+              >
+                Like<i class="fas fa-heart"></i>
+              </a>
+            )}
+
+            <a
+              className="card-footer-item"
+              onClick={(e) => {
+                e.preventDefault();
+                commentRef.current.focus();
+              }}
+            >
+              Comment<i class="fas fa-comment-alt"></i>
+            </a>
+          </footer>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              makeComment(e.target[0].value, postData._id);
+            }}
+            style={{ margin: "20px 0 40px 0" }}
+          >
+            <label class="label">Post a comment</label>
+            <div class="control">
+              <input
+                ref={commentRef}
+                placeholder="Post a comment"
+                class="input is-success is-rounded is-fullwidth"
+                type="text"
+              />
+            </div>
+          </form>
+
+          {postData.comments.map((record) => {
+            return (
+              <div className="Comment">
+                <article class="media">
+                  <figure class="media-left">
+                    <p class="image is-32x32">
+                      <img src={record.postedBy.photo}></img>
+                    </p>
+                  </figure>
+                  <div class="media-content">
+                    <div class="content">
+                      <p>
+                        {record.postedBy.name}
+                        <br></br>
+                        {record.body}
+                        <br></br>
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            );
+          })}
         </div>
       </div>
-    );
-  }
-  
-}
+    </div>
+  );
+};
 
 export default Post;
