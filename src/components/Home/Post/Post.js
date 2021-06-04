@@ -18,9 +18,9 @@ const Post = (props) => {
     <div className="Post" key={postData._id} style={{ marginTop: "30px" }}>
       <div className="post card">
         <div className="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-48x48">
+          <div className="media">
+            <div className="media-left">
+              <figure className="image is-48x48">
                 <img
                   src={postData.postedBy.photo}
                   alt="Placeholder image"
@@ -28,7 +28,7 @@ const Post = (props) => {
               </figure>
             </div>
 
-            <div class="media-content">
+            <div className="media-content">
               {postData.postedBy.userType == "org" ? (
                 <Link to={"/orgs/" + postData.postedBy._id}>
                   {postData.postedBy.name}
@@ -36,14 +36,14 @@ const Post = (props) => {
               ) : (
                 <p>{postData.postedBy.name}</p>
               )}
-              <p class="date-time-posted is-paddingless">
+              <p className="date-time-posted is-paddingless">
                 <small>Posted {relativeTime}</small>
               </p>
             </div>
             {postData.postedBy._id === state._id && (
-              <div class="media-right">
+              <div className="media-right">
                 <button
-                  class="delete"
+                  className="delete"
                   onClick={(e) => {
                     e.preventDefault();
                     deletePost(postData._id);
@@ -53,7 +53,7 @@ const Post = (props) => {
             )}
           </div>
 
-          <p class="post-content">{postData.body}</p>
+          <p className="post-content">{postData.body}</p>
 
           <div className="post-image card-image">
             <figure className="image is-4by3">
@@ -73,7 +73,7 @@ const Post = (props) => {
                 }}
                 className="card-footer-item"
               >
-                Unlike<i class="fas fa-heart"></i>
+                Unlike<i className="fas fa-heart"></i>
               </a>
             ) : (
               <a
@@ -83,7 +83,7 @@ const Post = (props) => {
                 }}
                 className="card-footer-item"
               >
-                Like<i class="fas fa-heart"></i>
+                Like<i className="fas fa-heart"></i>
               </a>
             )}
 
@@ -94,7 +94,7 @@ const Post = (props) => {
                 commentRef.current.focus();
               }}
             >
-              Comment<i class="fas fa-comment-alt"></i>
+              Comment<i className="fas fa-comment-alt"></i>
             </a>
           </footer>
 
@@ -105,12 +105,12 @@ const Post = (props) => {
             }}
             style={{ margin: "20px 0 40px 0" }}
           >
-            <label class="label">Post a comment</label>
-            <div class="control">
+            <label className="label">Post a comment</label>
+            <div className="control">
               <input
                 ref={commentRef}
                 placeholder="Post a comment"
-                class="input is-success is-rounded is-fullwidth"
+                className="input is-success is-rounded is-fullwidth"
                 type="text"
               />
             </div>
@@ -119,14 +119,14 @@ const Post = (props) => {
           {postData.comments.map((record) => {
             return (
               <div className="Comment">
-                <article class="media">
-                  <figure class="media-left">
-                    <p class="image is-32x32">
+                <article className="media">
+                  <figure className="media-left">
+                    <p className="image is-32x32">
                       <img src={record.postedBy.photo}></img>
                     </p>
                   </figure>
-                  <div class="media-content">
-                    <div class="content">
+                  <div className="media-content">
+                    <div className="content">
                       <p>
                         {record.postedBy.name}
                         <br></br>

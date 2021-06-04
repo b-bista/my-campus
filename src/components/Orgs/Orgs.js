@@ -128,7 +128,7 @@ const Orgs = () => {
                                   style={{ padding: "20px" }}
                                 >
                                   <div className="media-left">
-                                    <figure class="image is-96x96">
+                                    <figure className="image is-96x96">
                                       <img src={item.photo}></img>
                                     </figure>
                                   </div>

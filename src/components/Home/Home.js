@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import Post from "./Post/Post";
-import M from "materialize-css";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 import CreatePostBox from "./Post/CreatePostBox/CreatePostBox";
 import { UserContext } from "../../App";
 import { Link } from "react-router-dom";
@@ -36,15 +39,25 @@ const Home = () => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then((post) => {
         if (data.error) {
-          M.toast({ html: data.error, classes: "#c62828 red darken-3" });
+          NotificationManager.warning(
+            "Your post was not created.",
+            "Something went wrong",
+            3000
+          );
         } else {
-          console.log("WTF");
-          M.toast({
-            html: "Created post successfully",
-            classes: "#43a047 green darken-1",
-          });
+          console.log("Your post was successfully created!");
+          let newData = data.slice();
+          newData.unshift(post.post);
+
+          setData(newData);
+
+          NotificationManager.success(
+            "Your post was successfully created!",
+            "Post Created",
+            3000
+          );
         }
       })
       .catch((err) => {
@@ -158,7 +171,10 @@ const Home = () => {
         <section className="section">
           <div className="columns is-centered">
             <div className="column is-two-fifths">
-              <CreatePostBox createPost={createPost} />
+              {state && state.userType === "org" && (
+                <CreatePostBox createPost={createPost} />
+              )}
+
               {data.map((item) => {
                 return (
                   <Post
@@ -169,121 +185,6 @@ const Home = () => {
                     deletePost={deletePost}
                   />
                 );
-
-                // return (
-                //   <div
-                //     className="Post"
-                //     key={item._id}
-                //     style={{ marginTop: "30px" }}
-                //   >
-                //     <div className="post card">
-                //       <div className="card-content">
-                //         <div class="media">
-                //           <div class="media-left">
-                //             <figure class="image is-48x48">
-                //               <img
-                //                 src={item.postedBy.photo}
-                //                 alt="Placeholder image"
-                //               ></img>
-                //             </figure>
-                //           </div>
-
-                //           <div class="media-content">
-                //             {item.postedBy.userType == "org" ? (
-                //               <Link to={"/orgs/" + item.postedBy._id}>
-                //                 {item.postedBy.name}
-                //               </Link>
-                //             ) : (
-                //               <p>{item.postedBy.name}</p>
-                //             )}
-                //             <p class="date-time-posted is-paddingless">
-                //               <small>Posted {relativeTime}</small>
-                //             </p>
-                //           </div>
-                //         </div>
-
-                //         <p class="post-content">{item.body}</p>
-
-                //         <div className="post-image card-image">
-                //           <figure className="image is-4by3">
-                //             <img src={item.photo} alt="Placeholder image"></img>
-                //           </figure>
-                //         </div>
-
-                //         <p className="post-like-count is-paddingless">
-                //           {item.likes.length} likes
-                //         </p>
-                //         <footer className="card-footer">
-                //           {item.likes.includes(state._id) ? (
-                //             <a
-                //               onClick={(e) => {
-                //                 e.preventDefault();
-                //                 unlikePost(item._id);
-                //               }}
-                //               className="card-footer-item"
-                //             >
-                //               Unlike<i class="fas fa-heart"></i>
-                //             </a>
-                //           ) : (
-                //             <a
-                //               onClick={(e) => {
-                //                 e.preventDefault();
-                //                 likePost(item._id);
-                //               }}
-                //               className="card-footer-item"
-                //             >
-                //               Like<i class="fas fa-heart"></i>
-                //             </a>
-                //           )}
-
-                //           <a to="" className="card-footer-item">
-                //             Comment<i class="fas fa-comment-alt"></i>
-                //           </a>
-                //         </footer>
-
-                //         <form
-                //           onSubmit={(e) => {
-                //             makeComment(e.target[0].value, item._id);
-                //           }}
-                //           style={{ margin: "20px 0 40px 0" }}
-                //         >
-                //           <label class="label">Post a comment</label>
-                //           <div class="control">
-                //             <input
-                //               placeholder="Post a comment"
-                //               class="input is-success is-rounded is-fullwidth"
-                //               type="text"
-                //             />
-                //           </div>
-                //         </form>
-
-                //         {item.comments.map((record) => {
-                //           return (
-                //             <div className="Comment">
-                //               <article class="media">
-                //                 <figure class="media-left">
-                //                   <p class="image is-32x32">
-                //                     <img src={record.postedBy.photo}></img>
-                //                   </p>
-                //                 </figure>
-                //                 <div class="media-content">
-                //                   <div class="content">
-                //                     <p>
-                //                       {record.postedBy.name}
-                //                       <br></br>
-                //                       {record.body}
-                //                       <br></br>
-                //                     </p>
-                //                   </div>
-                //                 </div>
-                //               </article>
-                //             </div>
-                //           );
-                //         })}
-                //       </div>
-                //     </div>
-                //   </div>
-                // );
               })}
             </div>
           </div>

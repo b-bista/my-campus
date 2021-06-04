@@ -10,32 +10,32 @@ export default function CreatePostBox(props) {
     <div className="Post" style={{ marginTop: "30px" }}>
       <div className="post card">
         <div className="card-content">
-          <article class="media">
-            <figure class="media-left is-centered">
-              <p class="image is-64x64">
+          <article className="media">
+            <figure className="media-left has-text-centered">
+              <p className="image is-64x64">
                 <img src={state && state.photo}></img>
               </p>
               <p className="small">{state && state.name}</p>
             </figure>
-            <div class="media-content">
-              <div class="field">
-                <p class="control">
+            <div className="media-content">
+              <div className="field">
+                <p className="control">
                   <textarea
-                    class="textarea"
+                    className="textarea"
                     value={postBody}
                     onChange={(e) => {
                       setPostBody(e.target.value);
                     }}
-                    placeholder="Create a post body..."
+                    placeholder="Start typing..."
                   ></textarea>
                 </p>
               </div>
-              <nav class="level">
+              <nav className="level">
                 <div className="level-left"></div>
-                <div class="level-right">
-                  <div class="level-item">
+                <div className="level-right">
+                  <div className="level-item">
                     <a
-                      class="button is-info"
+                      className="button is-info"
                       onClick={(e) => {
                         e.preventDefault();
                         createPost(postBody);

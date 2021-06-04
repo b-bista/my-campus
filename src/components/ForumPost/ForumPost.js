@@ -66,9 +66,9 @@ const ForumPost = () => {
                 <h1 className="subtitle is-4"> MyCampus Forums</h1>
                 <div className="container">
                   <div className="postcard">
-                    <article class="media">
-                      <div class="media-content">
-                        <div class="content">
+                    <article className="media">
+                      <div className="media-content">
+                        <div className="content">
                           <p>
                             <strong>{post.posts && post.posts.title}</strong>
                           </p>
@@ -93,11 +93,11 @@ const ForumPost = () => {
                   }}
                   style={{ margin: "20px 0 40px 0" }}
                 >
-                  <label class="label">Post a comment</label>
-                  <div class="control">
+                  <label className="label">Post a comment</label>
+                  <div className="control">
                     <input
                       placeholder="Post a comment"
-                      class="input is-success is-rounded is-fullwidth"
+                      className="input is-success is-rounded is-fullwidth"
                       type="text"
                     />
                   </div>
@@ -108,14 +108,14 @@ const ForumPost = () => {
                 post.posts.comments.map((record) => {
                   return (
                     <div className="Comment">
-                      <article class="media">
-                        <figure class="media-left">
-                          <p class="image is-32x32">
+                      <article className="media">
+                        <figure className="media-left">
+                          <p className="image is-32x32">
                             <img src={record.postedBy.photo}></img>
                           </p>
                         </figure>
-                        <div class="media-content">
-                          <div class="content">
+                        <div className="media-content">
+                          <div className="content">
                             <p>
                               {record.postedBy.name}
                               <br></br>

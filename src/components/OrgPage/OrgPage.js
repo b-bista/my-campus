@@ -264,18 +264,18 @@ const OrgPage = () => {
                           </button>
                         )}
                         <br />
-                        <div class="has-text-weight-bold is-uppercase">
+                        <div className="has-text-weight-bold is-uppercase">
                           <p>About</p>
                         </div>
                         <br />
-                        <div class="has-text is-size-7">
+                        <div className="has-text is-size-7">
                           {userProfile.user.about}
                         </div>
                         <hr></hr>
-                        <div class="has-text-weight-bold is-uppercase">
+                        <div className="has-text-weight-bold is-uppercase">
                           <p>Contact Information</p>
                         </div>
-                        <div class="has-text is-size-7">
+                        <div className="has-text is-size-7">
                           <p>Email:</p>
                           <p>Club Suite Location:</p>
                           <p>Meeting Location:</p>
@@ -290,7 +290,7 @@ const OrgPage = () => {
                     <div className="card">
                       <div className="card-content">
                         <div className="card-image">
-                          <div class="has-text-weight-bold is-uppercase">
+                          <div className="has-text-weight-bold is-uppercase">
                             <p>Upcoming Events</p>
                           </div>
                           <br></br>
@@ -350,9 +350,9 @@ const OrgPage = () => {
                           >
                             <div className="post card">
                               <div className="card-content">
-                                <div class="media">
-                                  <div class="media-left">
-                                    <figure class="image is-48x48">
+                                <div className="media">
+                                  <div className="media-left">
+                                    <figure className="image is-48x48">
                                       <img
                                         src={item.postedBy.photo}
                                         alt="Placeholder image"
@@ -360,7 +360,7 @@ const OrgPage = () => {
                                     </figure>
                                   </div>
 
-                                  <div class="media-content">
+                                  <div className="media-content">
                                     {item.postedBy.userType == "org" ? (
                                       <Link to={"/orgs/" + item.postedBy._id}>
                                         {item.postedBy.name}
@@ -368,13 +368,13 @@ const OrgPage = () => {
                                     ) : (
                                       <p>{item.postedBy.name}</p>
                                     )}
-                                    <p class="date-time-posted is-paddingless">
+                                    <p className="date-time-posted is-paddingless">
                                       <small>Posted at {item.createdAt}</small>
                                     </p>
                                   </div>
                                 </div>
 
-                                <p class="post-content">{item.body}</p>
+                                <p className="post-content">{item.body}</p>
 
                                 <div className="post-image card-image">
                                   <figure className="image is-4by3">
@@ -396,7 +396,7 @@ const OrgPage = () => {
                                       }}
                                       className="card-footer-item"
                                     >
-                                      Unlike<i class="fas fa-heart"></i>
+                                      Unlike<i className="fas fa-heart"></i>
                                     </a>
                                   ) : (
                                     <a
@@ -405,11 +405,12 @@ const OrgPage = () => {
                                       }}
                                       className="card-footer-item"
                                     >
-                                      Like<i class="fas fa-heart"></i>
+                                      Like<i className="fas fa-heart"></i>
                                     </a>
                                   )}
                                   <a to="" className="card-footer-item">
-                                    Comment<i class="fas fa-comment-alt"></i>
+                                    Comment
+                                    <i className="fas fa-comment-alt"></i>
                                   </a>
                                 </footer>
 
@@ -419,11 +420,13 @@ const OrgPage = () => {
                                   }}
                                   style={{ margin: "20px 0 40px 0" }}
                                 >
-                                  <label class="label">Post a comment</label>
-                                  <div class="control">
+                                  <label className="label">
+                                    Post a comment
+                                  </label>
+                                  <div className="control">
                                     <input
                                       placeholder="Post a comment"
-                                      class="input is-success is-rounded is-fullwidth"
+                                      className="input is-success is-rounded is-fullwidth"
                                       type="text"
                                     />
                                   </div>
@@ -432,16 +435,16 @@ const OrgPage = () => {
                                 {item.comments.map((record) => {
                                   return (
                                     <div className="Comment">
-                                      <article class="media">
-                                        <figure class="media-left">
-                                          <p class="image is-32x32">
+                                      <article className="media">
+                                        <figure className="media-left">
+                                          <p className="image is-32x32">
                                             <img
                                               src={record.postedBy.photo}
                                             ></img>
                                           </p>
                                         </figure>
-                                        <div class="media-content">
-                                          <div class="content">
+                                        <div className="media-content">
+                                          <div className="content">
                                             <p>
                                               {record.postedBy.name}
                                               <br></br>

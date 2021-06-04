@@ -113,7 +113,7 @@ const EventPage = () => {
                         </div>
                       </div>
 
-                      <div class="has-text-centered">
+                      <div className="has-text-centered">
                         <Link to={"/orgs/" + eventProfile.events.hostedBy._id}>
                           <button
                             className="button is-rounded has-text-centered"

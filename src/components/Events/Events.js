@@ -142,7 +142,7 @@ const Events = () => {
                                 <div className="media-content">
                                   <p style={{ fontSize: "1vw" }}>{item.name}</p>
                                   <p style={{ fontSize: ".6vw" }}>
-                                    From {item.from} To {item.to}
+                                    From {Date(item.from)} To {Date(item.to)}
                                   </p>
                                   <p style={{ fontSize: ".6vw" }}>
                                     {item.location}
@@ -155,7 +155,7 @@ const Events = () => {
                                     style={{ position: "relative" }}
                                   >
                                     <figure
-                                      class="image is-24x24"
+                                      className="image is-24x24"
                                       style={{ float: "left" }}
                                     >
                                       <img src={item.hostedBy.photo}></img>
@@ -172,7 +172,7 @@ const Events = () => {
                                 </div>
                                 <div className="media-right">
                                   <div>
-                                    <figure class="image is-square is-128x128">
+                                    <figure className="image is-square is-128x128">
                                       <img src={item.photo}></img>
                                     </figure>
                                   </div>
