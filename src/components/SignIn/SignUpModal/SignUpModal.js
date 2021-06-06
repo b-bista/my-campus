@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext, useReducer, useContext } from "react";
 
 import UserType from "./Pages/UserType";
 import UserTypeInfo from "./Pages/UserTypeInfo";
@@ -6,45 +6,62 @@ import AuthInfo from "./Pages/AuthInfo";
 import ProfilePic from "./Pages/ProfilePic";
 import FinalScreen from "./Pages/FinalScreen";
 
-// const pageMap = {
-//   1: <UserType setUserType={setUserType}/>,
-//   2: <UserTypeInfo setName={setName} />,
-//   3: AuthInfo,
-//   4: ProfilePic,
-//   5: FinalScreen,
-// }
+import { signUpReducer } from "../../../reducers/signUpReducer";
 
-// const Pages = (props) => {
-//   const { pageNumber } = props;
+export const SignUpContext = createContext();
 
-//   const Page = pageMap[pageNumber];
+const pageMap = {
+  1: UserType,
+  2: UserTypeInfo,
+  3: AuthInfo,
+  4: ProfilePic,
+  5: FinalScreen,
+};
 
-//   return <Page />
-// };
+const Pages = (props) => {
+  const { pageNumber } = props;
+
+  const Page = pageMap[pageNumber];
+
+  return <Page />;
+};
 
 export default function SignUpModalP2(props) {
+  const [state, dispatch] = useReducer(signUpReducer, null);
   const { isActive, toggleActive } = props;
 
   const [pageNumber, setPageNumber] = useState(1);
 
-  const [userType, setUserType] = useState("");
+  // const [userType, setUserType] = useState("");
 
-  //Both user types
-  const [name, setName] = useState("");
-  const [photo, setPhoto] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // //Both user types
+  // const [name, setName] = useState("");
+  // const [photo, setPhoto] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
-  //Org specific
-  const [about, setAbout] = useState("");
+  // //Org specific
+  // const [about, setAbout] = useState("");
 
-  //Student specific
-  const [gender, setGender] = useState("");
+  // //Student specific
+  // const [gender, setGender] = useState("");
 
   const setActive = (e) => {
     e.preventDefault();
     toggleActive(false);
+  };
+
+  const prevPage = (e) => {
+    e.preventDefault();
+    if (pageNumber - 1 < 1) return;
+    setPageNumber(pageNumber - 1);
+  };
+
+  const nextPage = (e) => {
+    e.preventDefault();
+    if (pageNumber + 1 > 5) return;
+    setPageNumber(pageNumber + 1);
   };
 
   return (
@@ -59,6 +76,17 @@ export default function SignUpModalP2(props) {
             onClick={setActive}
           ></button>
         </header>
+        <SignUpContext.Provider value={{ state, dispatch }}>
+          <Pages pageNumber={pageNumber} />
+        </SignUpContext.Provider>
+        <footer className="modal-card-foot">
+          <button className="button is-success" onClick={prevPage}>
+            Previous
+          </button>
+          <button className="button" onClick={nextPage}>
+            Next
+          </button>
+        </footer>
       </div>
     </div>
   );

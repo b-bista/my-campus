@@ -1,7 +1,6 @@
 import React, { useEffect, createContext, useReducer, useContext } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
-import { reducer, initialState } from "./reducers/userReducer";
 import SignIn from "./components/SignIn/SignIn";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
@@ -12,6 +11,10 @@ import Events from "./components/Events/Events";
 import EventPage from "./components/EventPage/EventPage";
 import OrgPage from "./components/OrgPage/OrgPage";
 import Orgs from "./components/Orgs/Orgs";
+
+import { userReducer } from "./reducers/userReducer";
+import { signUpReducer } from "./reducers/signUpReducer";
+
 export const UserContext = createContext();
 
 const Routing = () => {
@@ -62,8 +65,14 @@ const Routing = () => {
   );
 };
 
+const reduceReducers = (...reducers) => (prevState, value, ...args) =>
+  reducers.reduce(
+    (newState, reducer) => reducer(newState, value, ...args),
+    prevState
+  );
+
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(userReducer, null);
 
   return (
     <UserContext.Provider value={{ state, dispatch }}>

@@ -1,32 +1,32 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { SignUpContext } from "../SignUpModal";
 
 export default function UserType(props) {
-  const { setUserType } = props;
+  const { state, dispatch } = useContext(SignUpContext);
+
+  const onTypeChange = (e) => {
+    dispatch({ type: "ADD_USER_TYPE", payload: e.target.value });
+  };
 
   return (
-    <div>
-      <section className="modal-card-body">
-        <div className="field">
-          <p className="control has-icons-left has-icons-right">
-            <input
-              placeholder="Full Name"
-              className="input is-medium is-rounded is-fullwidth"
-              type="text"
-              value={"username"}
-              onChange={(e) => setUserType(e.target.value)}
-            />
-            <span className="icon is-small is-left">
-              <i className="fas fa-id-card"></i>
-            </span>
-          </p>
-        </div>
-      </section>
-      <footer className="modal-card-foot">
-        <button className="button is-success">Sign Up</button>
-        <button className="button" onClick={"setActive"}>
-          Cancel
-        </button>
-      </footer>
-    </div>
+    <section className="modal-card-body">
+      <h1 className="is-medium">What type of user are you?</h1>
+      <div onChange={onTypeChange}>
+        <input
+          type="radio"
+          value="org"
+          name="userType"
+          checked={state && state.userType === "org"}
+        />
+        Organization
+        <input
+          type="radio"
+          value="student"
+          name="userType"
+          checked={state && state.userType === "student"}
+        />
+        Student
+      </div>
+    </section>
   );
 }

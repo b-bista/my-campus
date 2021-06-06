@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import Post from "./Post/Post";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+import { NotificationManager } from "react-notifications";
 import CreatePostBox from "./Post/CreatePostBox/CreatePostBox";
 import { UserContext } from "../../App";
-import { Link } from "react-router-dom";
 import "./Post/Post.css";
 
 const Home = () => {
   const [data, setData] = useState([]);
   const { state, dispatch } = useContext(UserContext);
+
   useEffect(() => {
     fetch("http://localhost:4000/allposts", {
       headers: {

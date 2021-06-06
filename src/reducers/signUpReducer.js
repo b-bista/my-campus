@@ -1,10 +1,10 @@
 export const initialState = null;
 
-export const reducer = (state, action) => {
+export const signUpReducer = (state, action) => {
   if (action.type == "ADD_USER_TYPE") {
     return {
       ...state,
-      userType: action.payload.userType,
+      userType: action.payload,
     };
   }
   if (action.type == "ADD_STUDENT_INFO") {
@@ -28,6 +28,12 @@ export const reducer = (state, action) => {
       email: action.payload.email,
       username: action.payload.username,
       password: action.payload.password,
+    };
+  }
+  if (action.type == "ADD_PIC") {
+    return {
+      ...state,
+      profilePic: action.payload.profilePic,
     };
   }
   return state;
