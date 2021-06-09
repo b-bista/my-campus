@@ -31,8 +31,7 @@ const Home = () => {
       },
       body: JSON.stringify({
         body: postBody,
-        pic:
-          "https://thumbs.dreamstime.com/z/abstract-poster-event-template-fluid-shapes-composition-modern-event-poster-template-futuristic-design-posters-liquid-color-152203412.jpg",
+        pic: "https://thumbs.dreamstime.com/z/abstract-poster-event-template-fluid-shapes-composition-modern-event-poster-template-futuristic-design-posters-liquid-color-152203412.jpg",
       }),
     })
       .then((res) => res.json())
@@ -167,7 +166,7 @@ const Home = () => {
       <div className="container">
         <section className="section">
           <div className="columns is-centered">
-            <div className="column is-two-fifths">
+            <div className="column is-half">
               {state && state.userType === "org" && (
                 <CreatePostBox createPost={createPost} />
               )}

@@ -35,7 +35,7 @@ export default function CreatePostBox(props) {
                 <div className="level-right">
                   <div className="level-item">
                     <a
-                      className="button is-info"
+                      className="button is-link"
                       onClick={(e) => {
                         e.preventDefault();
                         createPost(postBody);

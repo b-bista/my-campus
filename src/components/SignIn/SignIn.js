@@ -75,7 +75,7 @@ const SignIn = () => {
                 </div>
 
                 <button
-                  class="button is-rounded is-primary"
+                  class="button is-rounded is-link"
                   type="submit"
                   onClick={(e) => {
                     e.preventDefault();

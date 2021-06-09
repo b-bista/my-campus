@@ -12,20 +12,24 @@ export default function UserType(props) {
     <section className="modal-card-body">
       <h1 className="is-medium">What type of user are you?</h1>
       <div onChange={onTypeChange}>
-        <input
-          type="radio"
-          value="org"
-          name="userType"
-          checked={state && state.userType === "org"}
-        />
-        Organization
-        <input
-          type="radio"
-          value="student"
-          name="userType"
-          checked={state && state.userType === "student"}
-        />
-        Student
+        <label style={{ marginRight: "1em" }}>
+          Organization
+          <input
+            type="radio"
+            value="org"
+            name="userType"
+            checked={state && state.userType === "org"}
+          />
+        </label>
+        <label style={{ marginRight: "1em" }}>
+          Student
+          <input
+            type="radio"
+            value="student"
+            name="userType"
+            checked={state && state.userType === "student"}
+          />
+        </label>
       </div>
     </section>
   );

@@ -1,10 +1,10 @@
 import React, { useState, createContext, useReducer, useContext } from "react";
 
-import UserType from "./Pages/UserType";
-import UserTypeInfo from "./Pages/UserTypeInfo";
-import AuthInfo from "./Pages/AuthInfo";
-import ProfilePic from "./Pages/ProfilePic";
-import FinalScreen from "./Pages/FinalScreen";
+import UserType from "./pages/UserType";
+import UserTypeInfo from "./pages/UserTypeInfo";
+import AuthInfo from "./pages/AuthInfo";
+import ProfilePic from "./pages/ProfilePic";
+import FinalScreen from "./pages/FinalScreen";
 
 import { signUpReducer } from "../../../reducers/signUpReducer";
 
@@ -80,10 +80,10 @@ export default function SignUpModalP2(props) {
           <Pages pageNumber={pageNumber} />
         </SignUpContext.Provider>
         <footer className="modal-card-foot">
-          <button className="button is-success" onClick={prevPage}>
+          <button className="button is-link" onClick={prevPage}>
             Previous
           </button>
-          <button className="button" onClick={nextPage}>
+          <button className="button is-link" onClick={nextPage}>
             Next
           </button>
         </footer>
