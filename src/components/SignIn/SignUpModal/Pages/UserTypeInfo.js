@@ -7,12 +7,10 @@ export default function UserTypeInfo(props) {
   const { state, dispatch } = useContext(SignUpContext);
 
   return (
-    <section className="modal-card-body">
-      <div className="field">
-        <p className="control">
-          {state.userType === "org" ? <OrgFields /> : <StudentFields />}
-        </p>
-      </div>
-    </section>
+    <div className="field">
+      <p className="control">
+        {state.userType === "org" ? <OrgFields /> : <StudentFields />}
+      </p>
+    </div>
   );
 }

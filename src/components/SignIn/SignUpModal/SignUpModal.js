@@ -6,6 +6,8 @@ import AuthInfo from "./pages/AuthInfo";
 import ProfilePic from "./pages/ProfilePic";
 import FinalScreen from "./pages/FinalScreen";
 
+import M from "materialize-css";
+
 import { signUpReducer } from "../../../reducers/signUpReducer";
 
 export const SignUpContext = createContext();
@@ -19,11 +21,11 @@ const pageMap = {
 };
 
 const Pages = (props) => {
-  const { pageNumber } = props;
+  const { pageNumber, toggleActive } = props;
 
   const Page = pageMap[pageNumber];
 
-  return <Page />;
+  return <Page toggleActive={toggleActive} />;
 };
 
 export default function SignUpModalP2(props) {
@@ -76,9 +78,13 @@ export default function SignUpModalP2(props) {
             onClick={setActive}
           ></button>
         </header>
+
         <SignUpContext.Provider value={{ state, dispatch }}>
-          <Pages pageNumber={pageNumber} />
+          <section className="modal-card-body">
+            <Pages pageNumber={pageNumber} toggleActive={toggleActive} />
+          </section>
         </SignUpContext.Provider>
+
         <footer className="modal-card-foot">
           <button className="button is-link" onClick={prevPage}>
             Previous

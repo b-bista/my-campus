@@ -1,5 +1,6 @@
 import React, { useEffect, createContext, useReducer, useContext } from "react";
 import "./App.css";
+import { NotificationContainer } from "react-notifications";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import SignIn from "./components/SignIn/SignIn";
 import Header from "./components/Header/Header";
@@ -65,12 +66,6 @@ const Routing = () => {
   );
 };
 
-const reduceReducers = (...reducers) => (prevState, value, ...args) =>
-  reducers.reduce(
-    (newState, reducer) => reducer(newState, value, ...args),
-    prevState
-  );
-
 function App() {
   const [state, dispatch] = useReducer(userReducer, null);
 
@@ -78,6 +73,7 @@ function App() {
     <UserContext.Provider value={{ state, dispatch }}>
       <BrowserRouter>
         <Header />
+        <NotificationContainer />
         <Routing />
       </BrowserRouter>
     </UserContext.Provider>

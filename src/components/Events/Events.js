@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import "./Events.css";
 import { UserContext } from "../../App";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -33,11 +34,11 @@ const Events = () => {
             <div className="column is-one-fifth">
               <div className="card">
                 <div className="card-content">
-                  <label className="label" style={{ fontSize: "14px" }}>
+                  <label className="label" style={{ fontSize: "1.25rem" }}>
                     Filter by
                   </label>
                   <hr></hr>
-                  <label className="label" style={{ fontSize: "12px" }}>
+                  <label className="label" style={{ fontSize: "1rem" }}>
                     Date
                   </label>
                   <div className="container">
@@ -61,7 +62,7 @@ const Events = () => {
                   </div>
                   <hr></hr>
 
-                  <label className="label" style={{ fontSize: "12px" }}>
+                  <label className="label" style={{ fontSize: "1rem" }}>
                     Event Categories (Select all that apply).
                   </label>
                   <div className="columns">
@@ -112,7 +113,7 @@ const Events = () => {
 
                   <hr></hr>
 
-                  <label className="label" style={{ fontSize: "12px" }}>
+                  <label className="label" style={{ fontSize: "1rem" }}>
                     Club Name
                   </label>
                   <input
@@ -126,7 +127,10 @@ const Events = () => {
             <div className="column is-three-fifths">
               <div className="card is-paddingless">
                 <div className="card-content">
-                  <h1 className="has-text-centered" style={{ fontSize: "2vw" }}>
+                  <h1
+                    className="has-text-centered"
+                    style={{ fontSize: "2rem" }}
+                  >
                     Search Current On-Campus Events
                   </h1>
                   <div className="container">
@@ -134,20 +138,22 @@ const Events = () => {
                       return (
                         <div className="EventTile">
                           <Link to={"/events/" + item._id}>
-                            <div className="card">
+                            <div>
                               <div
                                 className="media"
                                 style={{ padding: "20px" }}
                               >
                                 <div className="media-content">
-                                  <p style={{ fontSize: "1vw" }}>{item.name}</p>
-                                  <p style={{ fontSize: ".6vw" }}>
+                                  <p style={{ fontSize: "1.5rem" }}>
+                                    {item.name}
+                                  </p>
+                                  <p style={{ fontSize: "1rem" }}>
                                     From {Date(item.from)} To {Date(item.to)}
                                   </p>
-                                  <p style={{ fontSize: ".6vw" }}>
+                                  <p style={{ fontSize: "1rem" }}>
                                     {item.location}
                                   </p>
-                                  <p style={{ fontSize: ".7vw" }}>
+                                  <p style={{ fontSize: "1rem" }}>
                                     {item.description}
                                   </p>
                                   <div
@@ -161,7 +167,10 @@ const Events = () => {
                                       <img src={item.hostedBy.photo}></img>
                                     </figure>
                                     <p
-                                      style={{ fontSize: ".7vw", left: "40px" }}
+                                      style={{
+                                        fontSize: "1rem",
+                                        left: "40px",
+                                      }}
                                     >
                                       Hosted by:{" "}
                                       <Link to={"/orgs/" + item.hostedBy._id}>

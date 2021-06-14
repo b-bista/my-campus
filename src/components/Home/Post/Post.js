@@ -53,7 +53,9 @@ const Post = (props) => {
             )}
           </div>
 
-          <p className="post-content">{postData.body}</p>
+          <p className="post-content" style={{ marginBottom: "2rem" }}>
+            {postData.body}
+          </p>
 
           <div className="post-image card-image">
             <figure className="image is-4by3">
@@ -83,7 +85,7 @@ const Post = (props) => {
                 }}
                 className="card-footer-item"
               >
-                Like<i className="fas fa-heart"></i>
+                Like <i className="fas fa-heart"></i>
               </a>
             )}
 

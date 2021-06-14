@@ -5,11 +5,12 @@ export default function UserType(props) {
   const { state, dispatch } = useContext(SignUpContext);
 
   const onTypeChange = (e) => {
+    dispatch({ type: "CLEAR" });
     dispatch({ type: "ADD_USER_TYPE", payload: e.target.value });
   };
 
   return (
-    <section className="modal-card-body">
+    <div>
       <h1 className="is-medium">What type of user are you?</h1>
       <div onChange={onTypeChange}>
         <label style={{ marginRight: "1em" }}>
@@ -31,6 +32,6 @@ export default function UserType(props) {
           />
         </label>
       </div>
-    </section>
+    </div>
   );
 }

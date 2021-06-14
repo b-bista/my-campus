@@ -6,21 +6,18 @@ export default function StudentFields(props) {
 
   return (
     <div>
-      <label>
-        Full name
-        <input
-          placeholder="Full Name"
-          className="input is-rounded is-fullwidth"
-          type="text"
-          value={state && state.name}
-          onChange={(e) => {
-            dispatch({
-              type: "ADD_STUDENT_INFO",
-              payload: { name: e.target.value },
-            });
-          }}
-        />
-      </label>
+      <input
+        placeholder="Full Name"
+        className="input is-fullwidth"
+        type="text"
+        value={state && state.name}
+        onChange={(e) => {
+          dispatch({
+            type: "ADD_STUDENT_INFO",
+            payload: { name: e.target.value },
+          });
+        }}
+      />
       <div
         onChange={(e) => {
           dispatch({

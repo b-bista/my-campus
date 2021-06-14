@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useContext, useState } from "react";
+import { NotificationManager } from "react-notifications";
 import { UserContext } from "../../App";
 import { Link, useHistory } from "react-router-dom";
 
@@ -60,6 +61,11 @@ function Header() {
               onClick={() => {
                 localStorage.clear();
                 dispatch({ type: "CLEAR" });
+                NotificationManager.error(
+                  "Logged Out",
+                  "You have been successfully logged out.",
+                  3000
+                );
                 history.push("/signin");
               }}
             >

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import SignUpModal from "./SignUpModal/SignUpModal";
-import { Link, useHistory } from "react-router-dom";
+import { NotificationManager } from "react-notifications";
+import { useHistory } from "react-router-dom";
 import { UserContext } from "../../App";
 
 const SignIn = () => {
@@ -25,11 +26,19 @@ const SignIn = () => {
       .then((data) => {
         console.log(data);
         if (data.error) {
+          NotificationManager.error(
+            "Could not log in. Something went wrong.",
+            3000
+          );
         } else {
           localStorage.setItem("jwt", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
           dispatch({ type: "USER", payload: data.user });
           history.push("/");
+          NotificationManager.success(
+            "You have been successfully logged in.",
+            3000
+          );
         }
       })
       .catch((err) => {

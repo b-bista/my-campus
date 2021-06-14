@@ -17,8 +17,10 @@ const Home = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
         setData(result);
+      })
+      .catch((err) => {
+        NotificationManager.error("Trouble loading posts.", 3000);
       });
   }, []);
 
@@ -37,13 +39,8 @@ const Home = () => {
       .then((res) => res.json())
       .then((post) => {
         if (data.error) {
-          NotificationManager.warning(
-            "Your post was not created.",
-            "Something went wrong",
-            3000
-          );
+          NotificationManager.error("Something went wrong", 3000);
         } else {
-          console.log("Your post was successfully created!");
           let newData = data.slice();
           newData.unshift(post.post);
 
@@ -51,13 +48,17 @@ const Home = () => {
 
           NotificationManager.success(
             "Your post was successfully created!",
-            "Post Created",
             3000
           );
         }
       })
       .catch((err) => {
         console.log(err);
+        NotificationManager.error(
+          "Your post was not created.",
+          "Something went wrong",
+          3000
+        );
       });
   };
 
@@ -75,6 +76,10 @@ const Home = () => {
           return item._id !== result._id;
         });
         setData(newData);
+        NotificationManager.success(
+          "Your post was successfully deleted!",
+          3000
+        );
       });
   };
 

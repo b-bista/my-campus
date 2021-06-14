@@ -1,6 +1,9 @@
 export const initialState = null;
 
 export const signUpReducer = (state, action) => {
+  if (action.type == "CLEAR") {
+    return null;
+  }
   if (action.type == "ADD_USER_TYPE") {
     return {
       ...state,
@@ -8,32 +11,47 @@ export const signUpReducer = (state, action) => {
     };
   }
   if (action.type == "ADD_STUDENT_INFO") {
-    return {
-      ...state,
-      name: action.payload.name,
-      gender: action.payload.gender,
-    };
+    let newState = { ...state };
+
+    for (let data in action.payload) {
+      newState[data] = action.payload[data];
+    }
+
+    return newState;
+    // return {
+    //   ...state,
+    //   name: action.payload.name,
+    //   gender: action.payload.gender,
+    // };
   }
   if (action.type == "ADD_ORG_INFO") {
-    return {
-      ...state,
-      name: action.payload.name,
-      about: action.payload.gender,
-      banner: action.payload.banner,
-    };
+    let newState = { ...state };
+
+    for (let data in action.payload) {
+      newState[data] = action.payload[data];
+    }
+
+    return newState;
   }
   if (action.type == "ADD_AUTH_INFO") {
-    return {
-      ...state,
-      email: action.payload.email,
-      username: action.payload.username,
-      password: action.payload.password,
-    };
+    let newState = { ...state };
+
+    for (let data in action.payload) {
+      newState[data] = action.payload[data];
+    }
+
+    return newState;
+    // return {
+    //   ...state,
+    //   email: action.payload.email,
+    //   username: action.payload.username,
+    //   password: action.payload.password,
+    // };
   }
   if (action.type == "ADD_PIC") {
     return {
       ...state,
-      profilePic: action.payload.profilePic,
+      profilePic: action.payload,
     };
   }
   return state;
