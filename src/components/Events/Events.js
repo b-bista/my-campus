@@ -9,7 +9,7 @@ const Events = () => {
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:4000/allevents", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/allevents`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },

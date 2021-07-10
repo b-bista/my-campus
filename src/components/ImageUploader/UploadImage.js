@@ -3,11 +3,11 @@ import { NotificationManager } from "react-notifications";
 import S3FileUpload from "react-s3";
 
 const config = {
-  bucketName: process.env.AWS_BUCKET_NAME,
-  dirName: process.env.AWS_DIR_NAME,
-  region: process.env.AWS_REGION,
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  bucketName: process.env.REACT_APP_AWS_BUCKET_NAME,
+  dirName: process.env.REACT_APP_AWS_DIR_NAME,
+  region: process.env.REACT_APP_AWS_REGION,
+  accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
 };
 
 const UploadImage = (props) => {

@@ -28,7 +28,7 @@ export default function FinalScreen(props) {
   }, []);
 
   const signUp = () => {
-    fetch("http://localhost:4000/signup", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/signup`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",

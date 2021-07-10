@@ -11,11 +11,14 @@ const ForumPost = () => {
   const { postid } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:4000/forumposts/${postid}`, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-    })
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/forumposts/${postid}`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -25,17 +28,20 @@ const ForumPost = () => {
   }, []);
 
   const makeComment = (body, postId) => {
-    fetch("http://localhost:4000/commentForum", {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-      body: JSON.stringify({
-        postId,
-        body,
-      }),
-    })
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/commentForum`,
+      {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+        body: JSON.stringify({
+          postId,
+          body,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         console.log(result);

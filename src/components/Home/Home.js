@@ -10,7 +10,8 @@ const Home = () => {
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:4000/allposts", {
+    console.log(process.env.REACT_APP_AWS_BUCKET_NAME);
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/allposts`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -25,7 +26,7 @@ const Home = () => {
   }, []);
 
   const createPost = (postBody) => {
-    fetch("http://localhost:4000/createpost", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/createpost`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -63,12 +64,15 @@ const Home = () => {
   };
 
   const deletePost = (postid) => {
-    fetch(`http://localhost:4000/deletepost/${postid}`, {
-      method: "delete",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-    })
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deletepost/${postid}`,
+      {
+        method: "delete",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -84,7 +88,7 @@ const Home = () => {
   };
 
   const likePost = (id) => {
-    fetch("http://localhost:4000/like", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/like`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -111,7 +115,7 @@ const Home = () => {
   };
 
   const unlikePost = (id) => {
-    fetch("http://localhost:4000/unlike", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/unlike`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +142,7 @@ const Home = () => {
   };
 
   const makeComment = (body, postId) => {
-    fetch("http://localhost:4000/comment", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/comment`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",

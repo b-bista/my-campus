@@ -12,7 +12,7 @@ const SignIn = () => {
   const [signUpActive, setSignUpActive] = useState(false);
 
   const PostData = () => {
-    fetch("http://localhost:4000/signin", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/signin`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",

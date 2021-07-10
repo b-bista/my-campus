@@ -8,11 +8,14 @@ const EventPage = () => {
   const { state, dispatch } = useContext(UserContext);
   const { eventid } = useParams();
   useEffect(() => {
-    fetch(`http://localhost:4000/events/${eventid}`, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-    })
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/events/${eventid}`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         //console.log(result)

@@ -10,11 +10,14 @@ const ForumList = () => {
   const { topicid } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:4000/allforumposts/${topicid}`, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-    })
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/allforumposts/${topicid}`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      }
+    )
       .then((res) => res.json())
       .catch((err) => {
         console.log(err);

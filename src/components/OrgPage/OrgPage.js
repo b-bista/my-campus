@@ -14,11 +14,14 @@ const OrgPage = () => {
     state && state.following.includes(orgid) ? false : true
   );
   useEffect(() => {
-    fetch(`http://localhost:4000/users/${orgid}`, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-    })
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/users/${orgid}`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -26,11 +29,14 @@ const OrgPage = () => {
         setProfile(result);
       });
 
-    fetch(`http://localhost:4000/allposts/${orgid}`, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-    })
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/allposts/${orgid}`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -38,11 +44,14 @@ const OrgPage = () => {
         setPosts(result);
       });
 
-    fetch(`http://localhost:4000/events/by/${orgid}`, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-    })
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/events/by/${orgid}`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -52,7 +61,7 @@ const OrgPage = () => {
   }, []);
 
   const likePost = (id) => {
-    fetch("http://localhost:4000/like", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/like`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +89,7 @@ const OrgPage = () => {
   };
 
   const unlikePost = (id) => {
-    fetch("http://localhost:4000/unlike", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/unlike`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +117,7 @@ const OrgPage = () => {
   };
 
   const makeComment = (body, postId) => {
-    fetch("http://localhost:4000/comment", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/comment`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -137,12 +146,15 @@ const OrgPage = () => {
   };
 
   const deletePost = (postid) => {
-    fetch(`http://localhost:4000/deletepost/${postid}`, {
-      method: "delete",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-    })
+    fetch(
+      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deletepost/${postid}`,
+      {
+        method: "delete",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -154,7 +166,7 @@ const OrgPage = () => {
   };
 
   const followUser = () => {
-    fetch("http://localhost:4000/follow", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/follow`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -186,7 +198,7 @@ const OrgPage = () => {
       });
   };
   const unfollowUser = () => {
-    fetch("http://localhost:4000/unfollow", {
+    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/unfollow`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
