@@ -1,10 +1,10 @@
 import React, { useState, createContext, useReducer, useContext } from "react";
 
-import UserType from "./pages/UserType";
-import UserTypeInfo from "./pages/UserTypeInfo";
-import AuthInfo from "./pages/AuthInfo";
-import ProfilePic from "./pages/ProfilePic";
-import FinalScreen from "./pages/FinalScreen";
+import UserType from "./Pages/UserType";
+import UserTypeInfo from "./Pages/UserTypeInfo";
+import AuthInfo from "./Pages/AuthInfo";
+import ProfilePic from "./Pages/ProfilePic";
+import FinalScreen from "./Pages/FinalScreen";
 
 import M from "materialize-css";
 
