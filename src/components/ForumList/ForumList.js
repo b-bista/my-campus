@@ -3,6 +3,7 @@ import { UserContext } from "../../App";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./ForumList.css";
+import { API } from "../../constants";
 
 const ForumList = () => {
   const [posts, setPosts] = useState([]);
@@ -10,14 +11,11 @@ const ForumList = () => {
   const { topicid } = useParams();
 
   useEffect(() => {
-    fetch(
-      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/allforumposts/${topicid}`,
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
-      }
-    )
+    fetch(`${API}/allforumposts/${topicid}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
       .then((res) => res.json())
       .catch((err) => {
         console.log(err);

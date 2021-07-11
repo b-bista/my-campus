@@ -3,6 +3,7 @@ import { UserContext } from "../../App";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./ForumPost.css";
+import { API } from "../../constants";
 
 const ForumPost = () => {
   const [post, setPost] = useState({});
@@ -11,14 +12,11 @@ const ForumPost = () => {
   const { postid } = useParams();
 
   useEffect(() => {
-    fetch(
-      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/forumposts/${postid}`,
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
-      }
-    )
+    fetch(`${API}/forumposts/${postid}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -28,20 +26,17 @@ const ForumPost = () => {
   }, []);
 
   const makeComment = (body, postId) => {
-    fetch(
-      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/commentForum`,
-      {
-        method: "put",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
-        body: JSON.stringify({
-          postId,
-          body,
-        }),
-      }
-    )
+    fetch(`${API}/commentForum`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        postId,
+        body,
+      }),
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);

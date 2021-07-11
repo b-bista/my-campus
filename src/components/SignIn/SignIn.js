@@ -3,6 +3,7 @@ import SignUpModal from "./SignUpModal/SignUpModal";
 import { NotificationManager } from "react-notifications";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../App";
+import { API } from "../../constants";
 
 const SignIn = () => {
   const { state, dispatch } = useContext(UserContext);
@@ -12,14 +13,14 @@ const SignIn = () => {
   const [signUpActive, setSignUpActive] = useState(false);
 
   const PostData = () => {
-    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/signin`, {
+    fetch(`${API}/signin`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        password,
         username,
+        password,
       }),
     })
       .then((res) => res.json())
@@ -85,12 +86,7 @@ const SignIn = () => {
 
                 <button
                   class="button is-rounded is-link"
-                  type="submit"
                   onClick={(e) => {
-                    e.preventDefault();
-                    PostData();
-                  }}
-                  onSubmit={(e) => {
                     e.preventDefault();
                     PostData();
                   }}

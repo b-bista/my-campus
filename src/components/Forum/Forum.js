@@ -3,20 +3,18 @@ import { UserContext } from "../../App";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./Forum.css";
+import { API } from "../../constants";
 
 const Forum = () => {
   const [topics, setTopics] = useState([]);
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    fetch(
-      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/allforumtopics`,
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
-      }
-    )
+    fetch(`${API}/allforumtopics`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
       .then((res) => res.json())
       .catch((err) => {
         console.log(err);

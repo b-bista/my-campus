@@ -3,13 +3,14 @@ import "./Events.css";
 import { UserContext } from "../../App";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { API } from "../../constants";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/allevents`, {
+    fetch(`${API}/allevents`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },

@@ -1,9 +1,9 @@
-//Backend api endpoint
-const API = "";
+let API = "";
+
 if (process.env.NODE_ENV === "development") {
-  API = `http:/www.localhost:4000`;
+  API = "http://localhost:4000";
 } else {
-  API = ``;
+  API = "http://my-campus-backend.herokuapp.com";
 }
 
 export { API };

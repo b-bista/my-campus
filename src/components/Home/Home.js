@@ -4,6 +4,7 @@ import { NotificationManager } from "react-notifications";
 import CreatePostBox from "./Post/CreatePostBox/CreatePostBox";
 import { UserContext } from "../../App";
 import "./Post/Post.css";
+import { API } from "../../constants";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -11,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     console.log(process.env.REACT_APP_AWS_BUCKET_NAME);
-    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/allposts`, {
+    fetch(`${API}/allposts`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -26,7 +27,7 @@ const Home = () => {
   }, []);
 
   const createPost = (postBody) => {
-    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/createpost`, {
+    fetch(`${API}/createpost`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -64,15 +65,12 @@ const Home = () => {
   };
 
   const deletePost = (postid) => {
-    fetch(
-      `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deletepost/${postid}`,
-      {
-        method: "delete",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
-      }
-    )
+    fetch(`${API}/deletepost/${postid}`, {
+      method: "delete",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
@@ -88,7 +86,7 @@ const Home = () => {
   };
 
   const likePost = (id) => {
-    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/like`, {
+    fetch(`${API}/like`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -115,7 +113,7 @@ const Home = () => {
   };
 
   const unlikePost = (id) => {
-    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/unlike`, {
+    fetch(`${API}/unlike`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -142,7 +140,7 @@ const Home = () => {
   };
 
   const makeComment = (body, postId) => {
-    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/comment`, {
+    fetch(`${API}/comment`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",

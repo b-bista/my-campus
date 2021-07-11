@@ -2,13 +2,14 @@ import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../App";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { API } from "../../constants";
 
 const Orgs = () => {
   const [orgs, setOrgs] = useState([]);
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/allorgs`, {
+    fetch(`${API}/allorgs`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },

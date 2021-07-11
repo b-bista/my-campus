@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { NotificationManager } from "react-notifications";
 import { SignUpContext } from "../SignUpModal";
 import { useHistory } from "react-router-dom";
+import { API } from "../../../../constants";
 
 export default function FinalScreen(props) {
   const [isCreatingAccount, setIsCreatingAccount] = useState(true);
@@ -28,7 +29,7 @@ export default function FinalScreen(props) {
   }, []);
 
   const signUp = () => {
-    fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/signup`, {
+    fetch(`${API}/signup`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
